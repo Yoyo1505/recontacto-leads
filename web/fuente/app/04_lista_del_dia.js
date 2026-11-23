@@ -11,14 +11,23 @@
         <div class="pila">
           <div class="kpis" id="l-kpis"></div>
           <div class="tarjeta">
+            ${ayuda("Haz clic en una fila para ver por qué se recomienda esa persona y el mensaje. La prioridad 1 es la primera a la que hay que escribir.")}
             <div class="barra" id="l-filtros"></div>
             <div class="scroll"><table id="l-tabla"></table></div>
             <div class="paginacion" id="l-pag"></div>
+            <details class="glosario"><summary>¿Qué significa cada columna?</summary><ul>
+              <li><b>Prioridad:</b> el orden en que se debe contactar. Primero quien nunca recibió un contacto.</li>
+              <li><b>Acción:</b> "contactar" tiene horario asignado; "en cola" no cupo hoy y se reprograma, no se descarta.</li>
+              <li><b>Intento:</b> cuántas veces se ha buscado a la persona (máximo según las reglas).</li>
+              <li><b>Horario asignado:</b> el mejor horario libre para esa persona, sin pasar del límite de contactos por hora.</li>
+              <li><b>Prob. de contestar:</b> qué tan probable es que conteste en ese horario según el modelo. Solo ayuda a elegir la hora; nadie se descarta por tenerla baja.</li>
+            </ul></details>
           </div>
           <div class="dos">
             <div class="tarjeta"><h3>Carga por día y hora</h3>${ayuda("Cuántos contactos caen en cada hora. El límite por hora evita saturar al equipo.")}<div id="l-mapa" class="grafica"></div></div>
             <div class="tarjeta" id="l-detalle"></div>
           </div>
+          <div class="tarjeta"><h3>Quiénes están en la lista, por canal</h3>${ayuda("Cuántas personas hay de cada canal y cuántas nunca han recibido un contacto.")}<div id="l-canales" class="grafica"></div><p class="lectura-caja" id="l-canales-txt"></p></div>
           <div class="tarjeta" id="l-excl"></div>
         </div>`;
       cont.dataset.listo = "1";
@@ -65,6 +74,11 @@
     const z = dias.map((d) => horas.map((h) => L.filas.filter((f) => f.horario && M.fmtDia(f.horario) === d && M.horaDe(f.horario) === h).length));
     const c = colores();
     graficar("l-mapa", [{ type: "heatmap", z, x: horas.map((h) => `${String(h).padStart(2, "0")}:00`), y: dias.map((d) => `${DIAS_CORTOS[M.diaSemana(M.parseFecha(d))]} ${d.slice(8)}/${d.slice(5, 7)}`), colorscale: [[0, c.panel], [1, c.steel]], hovertemplate: "%{y} a las %{x}: %{z} contactos<extra></extra>", colorbar: { title: "Contactos" } }], { yaxis: { autorange: "reversed" }, height: 300 });
+    const porCanal = {};
+    L.filas.forEach((f) => { const k = (porCanal[f.canal] = porCanal[f.canal] || { nuevos: 0, retoma: 0 }); f.nunca ? k.nuevos++ : k.retoma++; });
+    const cs = Object.keys(porCanal).sort((a, b) => porCanal[b].nuevos + porCanal[b].retoma - (porCanal[a].nuevos + porCanal[a].retoma));
+    graficar("l-canales", [{ type: "bar", name: "Nunca contactadas (salen primero)", x: cs, y: cs.map((k) => porCanal[k].nuevos), marker: { color: c.accent } }, { type: "bar", name: "Ya se intentó (retomar)", x: cs, y: cs.map((k) => porCanal[k].retoma), marker: { color: c.steel } }], { barmode: "stack", xaxis: { type: "category" }, yaxis: { title: "Personas en la lista" }, height: 300 });
+    poner("l-canales-txt", cs.length ? `hoy hay ${num(L.filas.length)} personas; ${num(nuevos)} nunca han recibido un contacto y salen primero. El canal con más personas es ${cs[0]} (${num(porCanal[cs[0]].nuevos + porCanal[cs[0]].retoma)}). Cada barra se divide en las que nunca se contactaron (turquesa) y las que ya se intentaron (azul).` : "no hay personas en la lista con estas reglas.");
     const filasExcl = Object.entries(L.conteoExcluidos).sort((a, b) => b[1] - a[1]);
     $("#l-excl").innerHTML = `<h3>Quién no recibe mensajes hoy y por qué</h3>${ayuda("Cada registro cuenta en el primer motivo que le aplica.")}<div class="scroll"><table><thead><tr><th>Motivo</th><th>Registros</th></tr></thead><tbody>${filasExcl.map(([k, n]) => `<tr><td>${esc(M.MOTIVOS[k])}</td><td class="num">${num(n)}</td></tr>`).join("") || '<tr><td colspan="2">Nadie excluido.</td></tr>'}</tbody></table></div>`;
   }

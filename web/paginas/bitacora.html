@@ -28,6 +28,7 @@
           <li>Un aviso de error aparecía sin que nadie hiciera clic en la sección de datos. Protegí los callbacks contra el disparo inicial.</li>
           <li>Al guardar, pandas no admitía cadenas vacías en columnas enteras con nulos. Convertí los números a texto al escribir.</li>
           <li>Mensajes y nombres de días sin acentos. Los corregí en un solo lugar.</li>
+          <li>Probé la herramienta con dos personas. Les costó identificar las pestañas e interpretar los datos. Numeré las pestañas, las agrupé y les puse su pregunta; agregué un resumen en palabras sencillas, dos gráficas nuevas y un "Cómo leerlo" en cada gráfica.</li>
           <li>La versión web se comparó con Python lead por lead: mismas 346 recomendaciones, mismo orden, horarios, mensajes y exclusiones, con una diferencia de probabilidad de 1e-16.</li>
           <li>El modelo local escribió mensajes seguros pero ajenos a la situación (0 de 12 fieles). Agregué el validador de fidelidad y un prompt de reescritura: subió a 5 de 12, todavía insuficiente.</li>
           <li>El clasificador de respuestas perdía la hora en "mañana a las 4", tomaba "no puedo hoy" como una cita y "¿me pueden llamar a las 6?" como una pregunta. Reescribí la lectura de horas y agregué la negación de tiempo.</li>

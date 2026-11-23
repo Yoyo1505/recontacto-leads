@@ -2,6 +2,16 @@
 
 Registro de cambios del proyecto de recontacto de leads. Cada entrada indica qué cambió, por qué y con qué resultado. Las entradas nuevas van arriba.
 
+## 0.9.0 (23-nov-2026)
+
+### Cambios tras la prueba con dos personas
+- Observación: a las dos personas les costó identificar las pestañas de la herramienta e interpretar los datos. Eran ocho botones sueltos con solo su nombre y las gráficas traían una ayuda general, no una conclusión.
+- Pestañas: numeradas del 1 al 8, en dos grupos ("Para trabajar cada día" y "Para entender si funciona"), con su pregunta, un recuadro de "Pestaña N de 8" con Anterior y Siguiente.
+- Datos: resumen de seis frases al abrir Evidencia, dos gráficas nuevas (canal y rapidez), una gráfica por canal y un glosario en la Lista del día, y un "Cómo leerlo" en cada gráfica con cifras calculadas. Los textos se recalculan al cambiar reglas, alpha o el efecto a detectar.
+- Un hallazgo al escribir los textos: la herramienta mostraba 40.3% (de 1,694 contactados) en la portada y 39.2% (de 1,624, sin teléfonos repetidos) en la evidencia, sin explicar la diferencia. El resumen ahora lo aclara.
+- Verificación: 229 pruebas, JavaScript contra Python, nuevas comprobaciones en Chrome y cero desbordes de 360 a 1,440 px.
+- Lo que no se hizo: volver a observar a las dos personas con la versión nueva para medir cuánto mejoró.
+
 ## 0.8.1 (23-nov-2026)
 
 - Se eliminó la portada "Inicio": con el menú de cuatro entregas en cada página era redundante. `index.html` ahora solo redirige a la herramienta (si no, la dirección raíz del sitio publicado dejaría de abrir algo). Se quitaron la página, sus estilos y sus comprobaciones, y se regrabó el video porque su última escena mostraba la portada.

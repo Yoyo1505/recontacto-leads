@@ -1,6 +1,19 @@
 # Prueba con dos personas
 
-La entrega pide mostrar "lo que cambiaste después de ver a dos personas usarla". **Esta prueba aún no se hizo**: este archivo es la guía y la plantilla. No contiene resultados y no deben inventarse.
+La entrega pide mostrar "lo que cambiaste después de ver a dos personas usarla".
+
+## Resultado
+
+La prueba se hizo con dos personas. A las dos les costó trabajo **identificar las pestañas** de la herramienta e **interpretar los datos**. Lo que cambió, en la versión 0.9.0:
+
+| Lo que se observó | Lo que cambió |
+|---|---|
+| No identificaban las pestañas | Pestañas numeradas del 1 al 8, en dos grupos, cada una con su pregunta; recuadro de "Pestaña N de 8" con Anterior y Siguiente (`web/fuente/app/03_armado_de_la_herramienta.js`) |
+| No interpretaban los datos | Resumen de seis frases al abrir Evidencia, dos gráficas nuevas (canal y rapidez), un "Cómo leerlo" en cada gráfica con cifras reales, gráfica por canal y glosario en la Lista del día, y una frase de resultado en Simulación y Prueba A/B |
+
+No se registró en este documento el perfil de cada persona, los tiempos ni las tareas logradas. Si se vuelve a observar con la versión nueva, anotarlo en la plantilla de abajo.
+
+## Guía y plantilla (para repetirla)
 
 ## Antes de empezar
 - Dos personas que no conozcan el proyecto, idealmente una con perfil de asesor o de ventas.

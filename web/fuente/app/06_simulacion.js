@@ -19,10 +19,10 @@
           <div class="kpis" id="s-kpis"></div>
           <div class="tarjeta"><p id="s-texto" style="font-weight:500;margin:0"></p></div>
           <div class="dos">
-            <div class="tarjeta"><h3>Distribución de la mejora</h3><div id="s-hist" class="grafica"></div></div>
-            <div class="tarjeta"><h3>Sensibilidad al supuesto</h3><div id="s-sens" class="grafica"></div></div>
+            <div class="tarjeta"><h3>Distribución de la mejora</h3><div id="s-hist" class="grafica"></div><p class="lectura-caja"><b>Cómo leerlo:</b> cada barra cuenta cuántas de las simulaciones dieron esa mejora (cuántas personas más contestan). La zona verde es el intervalo de 95%: si incluye el 0, con un solo día de lista no se distingue la mejora del azar.</p></div>
+            <div class="tarjeta"><h3>Sensibilidad al supuesto</h3><div id="s-sens" class="grafica"></div><p class="lectura-caja" id="s-sens-txt"></p></div>
           </div>
-          <div class="tarjeta"><h3>Tasa de respuesta simulada por brazo</h3><div id="s-caja" class="grafica"></div></div>
+          <div class="tarjeta"><h3>Tasa de respuesta simulada por brazo</h3><div id="s-caja" class="grafica"></div><p class="lectura-caja"><b>Cómo leerlo:</b> cada caja es el porcentaje que contesta en una lista con ese horario; la línea del centro es la mediana y el rombo el promedio. Si las cajas se traslapan casi por completo, la diferencia es pequeña frente al azar.</p></div>
         </div>`;
       let t = null;
       ["s-alfa", "s-n"].forEach((id) => $("#" + id).addEventListener("input", () => { $("#o-alfa").textContent = (+$("#s-alfa").value).toFixed(2); $("#o-n").textContent = $("#s-n").value; clearTimeout(t); t = setTimeout(vistaSimulacion, 120); }));
@@ -41,6 +41,8 @@
     const alfas = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
     const sens = alfas.map((a) => ({ a, ...M.resumenSimulacion(M.simular(prep, a, 500)) }));
     graficar("s-sens", [{ type: "scatter", x: sens.map((s) => s.a), y: sens.map((s) => s.icAlto), mode: "lines", line: { width: 0 }, hoverinfo: "skip", showlegend: false }, { type: "scatter", x: sens.map((s) => s.a), y: sens.map((s) => s.icBajo), mode: "lines", line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(120,160,190,0.25)", name: "IC 95%", hoverinfo: "skip" }, { type: "scatter", x: sens.map((s) => s.a), y: sens.map((s) => s.media), mode: "lines+markers", line: { color: c.steel }, name: "Mejora media", customdata: sens.map((s) => s.probMejora), hovertemplate: "alpha %{x:.1f}<br>Mejora media %{y:.1f}<br>Prob. de mejora %{customdata:.0%}<extra></extra>" }], { xaxis: { title: "Parte causal del horario (alpha)", range: [0, 1] }, yaxis: { title: "Personas adicionales que contestan" }, shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: c.accent, dash: "dash" } }, { type: "line", yref: "paper", x0: alfa, x1: alfa, y0: 0, y1: 1, line: { color: c.fg, dash: "dot" } }], height: 340 });
+    const todasCruzan = sens.every((s) => s.icBajo <= 0 && 0 <= s.icAlto);
+    poner("s-sens-txt", `muestra el resultado si el horario explicara más o menos de la ventaja (alpha, de 0 a 1). La banda es el intervalo de 95%. ${todasCruzan ? "La banda incluye el 0 con cualquier valor de alpha: con este supuesto o con otro, no hay evidencia de mejora con un solo día de lista." : "Con algunos valores de alpha la banda queda por encima de 0."}`);
     graficar("s-caja", [{ type: "box", y: corridas.tasaBase.map((v) => v * 100), name: "Horario sin optimizar", marker: { color: c.muted }, boxmean: true }, { type: "box", y: corridas.tasaPol.map((v) => v * 100), name: "Horario del modelo", marker: { color: c.steel }, boxmean: true }], { yaxis: { title: "% que contesta en la lista" }, showlegend: false, height: 320 });
   }
 

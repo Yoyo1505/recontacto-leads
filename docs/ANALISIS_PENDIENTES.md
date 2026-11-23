@@ -20,7 +20,7 @@ Escala de esfuerzo: **S** menos de un día · **M** de uno a cinco días · **L*
 | Modelo de lenguaje como redactor | Opcional y con respaldo en plantillas | Con llama3.1:8b local, 5 de 12 mensajes pasaron ambos validadores; la API de Anthropic no se probó contra el servicio real |
 | Medición de variantes | Código listo (`control.comparar_variantes`), sin datos | Pruebas con datos sintéticos |
 | Plan de visibilidad en IA y panel de medición | Plan y panel listos; sin medición real | Pruebas del panel; no se consultaron ChatGPT, Perplexity ni Google |
-| Prueba con dos personas | **No hecha** | Guía en `prueba_dos_personas.md` |
+| Prueba con dos personas | Hecha: costó identificar las pestañas e interpretar los datos; se corrigió. No se volvió a medir cuánto mejoró | `prueba_dos_personas.md` |
 
 ## 2. Qué falta, por prioridad
 
@@ -46,7 +46,7 @@ Escala de esfuerzo: **S** menos de un día · **M** de uno a cinco días · **L*
 | P1-6 | **Respaldo de `data/`.** Las versiones se guardan localmente (20) pero no hay copia externa | S | Copia diaria de `data/historial/` y `bajas.csv` a un almacenamiento de la empresa |
 | P1-7 | **Despliegue.** Solo se corre en una computadora o como página estática | M | Contenedor (Dockerfile) o servicio gestionado, con la configuración por variables de entorno y sin datos dentro de la imagen |
 | P1-8 | **Medir el efecto real.** No hay ningún experimento: el AUC es 0.60 y la simulación de un día no se distingue del azar | L | Prueba A/B con grupo de control (unas 4,100 personas por grupo para ver +3 puntos, unas 560 para +8) usando `control.comparar_variantes` y `simulacion.tamano_muestra` |
-| P1-9 | **Prueba con dos personas.** Requerida por la entrega | S | Completar `prueba_dos_personas.md` con lo observado y el cambio hecho |
+| P1-9 | **Repetir la prueba con la versión nueva** (pestañas guiadas y lecturas de las gráficas) y con más de dos personas, con tiempos y tareas logradas | S | Registrar en `prueba_dos_personas.md` el perfil, las tareas logradas y los tiempos |
 
 ### P2 · Mejoras importantes
 

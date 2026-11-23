@@ -66,6 +66,13 @@ def main():
         time.sleep(0.4)
         comprobar("responde NO" in (nav.js("document.querySelector('#l-msg') && document.querySelector('#l-msg').textContent") or ""), "el detalle muestra el mensaje con opción de baja")
 
+        comprobar(nav.js("document.querySelectorAll('.subpestanas button .tx small').length") == 8, "las 8 pestañas traen su pregunta (por ejemplo, ¿A quién contacto hoy?)")
+        comprobar(nav.js("document.querySelectorAll('.grupo-titulo').length") == 2, "las pestañas están en dos grupos: trabajar cada día y entender si funciona")
+        comprobar("Pestaña 1 de 8" in nav.js("document.querySelector('#guia-actual').textContent"), "la guía dice en qué pestaña estás")
+        nav.js("document.querySelector('#guia-actual [data-ir]:last-child').click()")
+        time.sleep(0.6)
+        comprobar("Pestaña 2 de 8" in nav.js("document.querySelector('#guia-actual').textContent"), "el botón Siguiente pasa a la pestaña 2")
+        comprobar(nav.js("!!document.querySelector('#l-canales .main-svg') || document.querySelector('#sub-lista').hidden"), "la lista tiene su gráfica por canal")
         nav.js("document.querySelector('[data-sub=\"mensajes\"]').click()")
         time.sleep(0.8)
         filas_msg = nav.js("document.querySelectorAll('#sub-mensajes tbody tr').length")
@@ -107,6 +114,11 @@ def main():
         nav.js("localStorage.removeItem('recontacto_bajas'); window.__recontacto.E.bajas.clear(); window.__recontacto.recalcular()")
         time.sleep(0.5)
 
+        nav.js("document.querySelector('[data-sub=\"evidencia\"]').click()")
+        time.sleep(2.0)
+        comprobar(nav.js("document.querySelectorAll('#e-resumen li').length") == 6, "la evidencia abre con un resumen de 6 frases en palabras sencillas")
+        comprobar(nav.js("document.querySelectorAll('#sub-evidencia .lectura-caja').length") >= 9, "cada gráfica de evidencia trae su 'Cómo leerlo'")
+        comprobar(nav.js("document.querySelectorAll('#e-canal .main-svg, #e-rapidez .main-svg').length") >= 2, "las gráficas de canal y rapidez se dibujan")
         for sub in ("evidencia", "simulacion", "ab", "datos", "limites"):
             nav.js(f"document.querySelector('[data-sub=\"{sub}\"]').click()")
             time.sleep(1.8 if sub in ("evidencia", "simulacion") else 0.8)
@@ -171,7 +183,9 @@ def main():
             if pagina == "video":
                 comprobar(nav.js("document.querySelector('video').getAttribute('src')") == "demo.mp4", "el video apunta a demo.mp4")
                 comprobar(nav.js("document.querySelectorAll('.tabla-demos tbody tr').length") == 7, "hay 7 demos para simular")
-                comprobar("Pendiente" in nav.js("document.querySelector('.tabla-prueba').textContent"), "la prueba con dos personas aparece como pendiente (sin resultados inventados)")
+                texto_prueba = nav.js("document.querySelector('.tabla-prueba').textContent")
+                comprobar("pestañas" in texto_prueba and "datos" in texto_prueba, "la prueba con dos personas registra lo observado (pestañas y datos) y lo que cambió")
+                comprobar("Pendiente" not in texto_prueba, "la prueba no deja campos 'Pendiente' ni inventa resultados")
 
         errores = nav.js("JSON.stringify(window.__errs)")
         comprobar(errores == "[]", f"sin errores de JavaScript en las demás páginas ({errores})")

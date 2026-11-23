@@ -120,13 +120,13 @@ TARJETA_LIMITES = (
         "Un modelo de lenguaje local solo acertó 5 de 12 mensajes: por eso hay plantillas",
         "Horario y rapidez del contacto no se pueden separar con estos datos",
         "No probé nube, PostgreSQL, MySQL ni el modelo de lenguaje con servicios reales",
-        "La prueba con dos personas está pendiente",
+        "En la prueba con dos personas costó identificar las pestañas e interpretar los datos; lo corregí",
     ],
 )
 TARJETA_CIERRE = (
     "Lo que sigue",
     [
-        "Probar con dos personas y registrar lo que cambie",
+        "Volver a probar con más personas las pestañas guiadas y las lecturas de cada gráfica",
         "Conectar la lectura de respuestas a WhatsApp con un asesor al lado",
         "Prueba A/B de variantes: unas 560 personas por grupo para ver 8 puntos",
         "Plan de visibilidad en IA para que recomienden a Clivi como solución",

@@ -16,8 +16,9 @@
             ${ayuda(`Tasa base de respuesta usada: ${pct(p0)} (la observada en los datos). Prueba z de dos proporciones, de dos colas.`)}
           </div>
           <div class="kpis" id="a-kpis"></div>
+          <div class="tarjeta"><p class="lectura-caja" id="a-txt" style="margin:0"></p></div>
           <div class="dos">
-            <div class="tarjeta"><h3>Potencia según el tamaño de la prueba</h3><div id="a-pot-g" class="grafica"></div></div>
+            <div class="tarjeta"><h3>Potencia según el tamaño de la prueba</h3><div id="a-pot-g" class="grafica"></div><p class="lectura-caja"><b>Cómo leerlo:</b> cada línea es un efecto que se quiere detectar (de +2 a +10 puntos). Sube más rápido cuanto más grande es el efecto: los efectos pequeños necesitan muchísima gente. La meta usual es llegar al 80% de potencia.</p></div>
             <div class="tarjeta"><h3>Tamaños de muestra por efecto</h3>${ayuda("Entre paréntesis, los días que tomaría con el flujo indicado.")}<div id="a-tabla" class="scroll"></div></div>
           </div>
         </div>`;
@@ -29,6 +30,7 @@
     const flujo = Math.max(1, +$("#a-flujo").value || 1);
     const n = M.tamanoMuestra(p0, delta, pot, alfa);
     $("#a-kpis").innerHTML = kpi("Personas por grupo", num(n)) + kpi("Personas en total", num(2 * n), "Dos grupos") + kpi("Duración estimada", `${num((2 * n) / flujo)} días`, "Con el flujo indicado");
+    poner("a-txt", `para comprobar una mejora de ${Math.round(delta * 100)} puntos hacen falta ${num(n)} personas en cada grupo (${num(2 * n)} en total), unos ${num((2 * n) / flujo)} días con ${num(flujo)} leads nuevos por día. Un grupo recibe la herramienta y el otro, el trabajo de siempre.`);
     const c = colores();
     const efectos = [0.02, 0.03, 0.05, 0.08, 0.1];
     const colEf = [c.steel, c.ok, c.accent, c.muted, "#C9A227"];

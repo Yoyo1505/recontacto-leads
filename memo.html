@@ -203,6 +203,30 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
 .tabla-demos td, .tabla-demos th { font-size: 0.86rem; }
 .tabla-demos td:first-child { font-weight: 800; color: var(--steel); }
 
+/* pestanas guiadas, guia de la pestana actual y lecturas de las graficas */
+.pestanas-guia { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 14px; margin-bottom: 14px; }
+.grupo-pestanas { background: var(--fondo-suave); border-radius: var(--radio); padding: 12px; min-width: 0; }
+.grupo-titulo { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--steel); margin: 0 0 8px 4px; }
+.grupo-pestanas .subpestanas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 8px; margin: 0; }
+.subpestanas button { display: flex; align-items: center; gap: 10px; text-align: left; border-radius: 16px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); }
+.subpestanas button .n { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--fondo-azul); color: var(--steel); font-weight: 800; font-size: 0.85rem; }
+.subpestanas button .tx { display: flex; flex-direction: column; min-width: 0; }
+.subpestanas button .tx b { font-size: 0.92rem; color: var(--fg); }
+.subpestanas button .tx small { font-size: 0.74rem; font-weight: 500; color: var(--muted); line-height: 1.25; }
+.subpestanas button[aria-selected="true"] { background: var(--steel); border-color: var(--steel); }
+.subpestanas button[aria-selected="true"] .n { background: #fff; color: var(--steel); }
+.subpestanas button[aria-selected="true"] .tx b, .subpestanas button[aria-selected="true"] .tx small { color: #fff; }
+.guia-actual { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 20px; background: var(--fondo-azul); border-radius: var(--radio); padding: 14px 18px; margin-bottom: 18px; }
+.guia-actual p { margin: 4px 0 0; color: #3C4C57; font-size: 0.9rem; }
+.guia-actual .paso { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 800; color: var(--steel); margin-bottom: 2px; }
+.lectura-caja { background: var(--fondo-suave); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; padding: 10px 14px; margin: 12px 0 0; font-size: 0.86rem; color: #2C3E4A; max-width: none; }
+.resumen { background: var(--fondo-azul); border-color: transparent; }
+.resumen li { margin-bottom: 8px; font-size: 0.96rem; }
+.glosario { margin-top: 14px; font-size: 0.88rem; }
+.glosario summary { cursor: pointer; font-weight: 700; color: var(--steel); }
+@media (max-width: 720px) { .guia-actual { padding: 12px 14px; } }
+.pestanas-guia { scroll-margin-top: 84px; }
+
 </style>
 </head>
 <body>
@@ -253,11 +277,11 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
           <li>Un modelo de lenguaje local (llama3.1:8b) redactó mensajes seguros y fieles a la situación solo 5 de 12 veces, por eso el texto sale de plantillas.</li>
           <li>No se puede separar el efecto del horario del de la rapidez del contacto, y solo hay un intento por persona.</li>
           <li>El modelo no se reentrena en el navegador; la versión en Python sí.</li>
-          <li>No probé la nube, PostgreSQL, MySQL ni el modelo de lenguaje con servicios reales. La prueba con dos personas está pendiente.</li>
+          <li>No probé la nube, PostgreSQL, MySQL ni el modelo de lenguaje con servicios reales. Con dos personas, les costó identificar las pestañas e interpretar los datos; lo corregí, pero no volví a medir con ellas cuánto mejoró.</li>
         </ul>
 
         <h3>Siguiente paso</h3>
-        <p>Probar la herramienta con dos personas y registrar lo que cambie. Después, conectar la lectura de respuestas a un canal real con un asesor al lado y correr la prueba A/B de variantes (unas 560 personas por grupo para ver una diferencia de 8 puntos). Aparte, dejé un plan de 90 días y un panel de medición para que las IA recomienden a Clivi como solución (<code>docs/plan_visibilidad_ia.md</code>).</p>
+        <p>Volver a probar la herramienta con más personas, ahora con las pestañas guiadas y las lecturas de cada gráfica. Después, conectar la lectura de respuestas a un canal real con un asesor al lado y correr la prueba A/B de variantes (unas 560 personas por grupo para ver una diferencia de 8 puntos). Aparte, dejé un plan de 90 días y un panel de medición para que las IA recomienden a Clivi como solución (<code>docs/plan_visibilidad_ia.md</code>).</p>
       </article>
     </div>
 </section>

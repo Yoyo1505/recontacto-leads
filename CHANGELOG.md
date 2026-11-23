@@ -10,6 +10,23 @@ Tipos de cambio: **Agregado** · **Cambiado** · **Corregido** · **Eliminado** 
 - Resultado de la primera medición real del panel de visibilidad con los motores comerciales (ver `docs/plan_visibilidad_ia.md`).
 - Resultados de la prueba con dos personas (ver `docs/prueba_dos_personas.md`).
 
+## [0.9.0] · 2026-11-23
+
+Cambios a partir de la prueba con dos personas: les costó identificar las pestañas de la herramienta e interpretar los datos.
+
+### Cambiado
+- **Pestañas guiadas.** Las 8 pestañas se numeran del 1 al 8 y se agrupan en "Para trabajar cada día" (Lista del día, Mensajes, Respuestas, Datos) y "Para entender si funciona" (Evidencia, Simulación, Prueba A/B, Límites). Cada una dice su pregunta ("¿A quién contacto hoy?", "¿Qué le escribo?"...). Un recuadro indica "Pestaña N de 8", explica qué hay ahí y trae los botones Anterior y Siguiente. Antes eran ocho botones sueltos con solo su nombre, en otro orden.
+- El video se regrabó para mostrar la nueva barra de pestañas y las lecturas.
+
+### Agregado
+- **Interpretación de los datos en palabras sencillas.** La pestaña Evidencia abre con un resumen de seis frases calculadas con los datos y dos gráficas nuevas: "El canal importa" y "La rapidez importa". Cada gráfica de Evidencia, Simulación y Prueba A/B trae un "Cómo leerlo" con las cifras reales (los textos se recalculan con los datos y los parámetros). La Prueba A/B dice en una frase cuánta gente y cuántos días hacen falta.
+- **Lista del día:** gráfica "Quiénes están en la lista, por canal" y un glosario de columnas ("¿Qué significa cada columna?").
+- `verificar_web.py` comprueba las pestañas con su pregunta, la guía "Pestaña N de 8", el botón Siguiente, el resumen de Evidencia y las lecturas de cada gráfica.
+- La prueba con dos personas queda registrada en la entrega 4, el memo, la bitácora de la página y `docs/prueba_dos_personas.md`, solo con lo observado.
+
+### Corregido
+- Dos cifras distintas del porcentaje que no contesta convivían en la herramienta: 40.3% (de 1,694 contactados) y 39.2% (de 1,624, sin los 70 registros con teléfono repetido). El resumen de Evidencia ahora explica ambas.
+
 ## [0.8.1] · 2026-11-23
 
 ### Eliminado

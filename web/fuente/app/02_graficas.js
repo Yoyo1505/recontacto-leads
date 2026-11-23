@@ -22,4 +22,5 @@
   }
   const kpi = (t, v, s) => `<div class="kpi"><div class="t">${esc(t)}</div><div class="v">${esc(v)}</div>${s ? `<div class="s">${esc(s)}</div>` : ""}</div>`;
   const ayuda = (t) => `<p class="ayuda">${t}</p>`;
+  const poner = (id, t) => { const e = document.getElementById(id); if (e) e.innerHTML = "<b>Cómo leerlo:</b> " + t; };
 

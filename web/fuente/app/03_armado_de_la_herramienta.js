@@ -1,14 +1,15 @@
   // ------------------------------------------------------------------ armado de la herramienta
   const SUBPESTANAS = [
-    ["lista", "Lista del día"],
-    ["mensajes", "Mensajes"],
-    ["respuestas", "Respuestas"],
-    ["evidencia", "Evidencia"],
-    ["simulacion", "Simulación"],
-    ["ab", "Prueba A/B"],
-    ["datos", "Datos"],
-    ["limites", "Límites"],
+    ["lista", "Lista del día", "¿A quién contacto hoy?", "La tabla de personas a las que hay que volver a escribir, con su horario, el motivo y el mensaje.", "trabajar"],
+    ["mensajes", "Mensajes", "¿Qué le escribo?", "Los mensajes por situación y la estrategia de cada variante.", "trabajar"],
+    ["respuestas", "Respuestas", "¿Qué hago si contesta?", "Escribe lo que contestó una persona y mira qué entiende la herramienta y qué haría.", "trabajar"],
+    ["datos", "Datos", "¿Cómo subo personas o bajas?", "Sube un archivo, agrega personas nuevas o registra a quien pidió no recibir mensajes.", "trabajar"],
+    ["evidencia", "Evidencia", "¿Qué dicen los datos?", "Dónde se pierde la respuesta y qué tan confiable es el modelo, con un resumen en palabras sencillas.", "entender"],
+    ["simulacion", "Simulación", "¿Cuánto ayudaría?", "Cuántas personas más contestarían con el horario del modelo, con su incertidumbre.", "entender"],
+    ["ab", "Prueba A/B", "¿Cómo lo compruebo?", "Cuánta gente y cuántos días hacen falta para comprobar una mejora de verdad.", "entender"],
+    ["limites", "Límites", "¿Qué no se puede afirmar?", "Lo que estos datos no permiten concluir y los supuestos que usé.", "entender"],
   ];
+  const GRUPOS = { trabajar: "Para trabajar cada día", entender: "Para entender si funciona" };
 
   function armar() {
     const r = E.reglas;
@@ -52,7 +53,8 @@
           <button class="boton claro" id="r-reset" type="button">Valores por defecto</button>
         </aside>
         <div>
-          <div class="subpestanas" role="tablist">${SUBPESTANAS.map(([id, t]) => `<button role="tab" data-sub="${id}" aria-selected="${id === E.sub}">${t}</button>`).join("")}</div>
+          <div class="pestanas-guia">${Object.entries(GRUPOS).map(([g, titulo]) => `<div class="grupo-pestanas"><div class="grupo-titulo">${titulo}</div><div class="subpestanas" role="tablist" aria-label="${titulo}">${SUBPESTANAS.filter((p) => p[4] === g).map(([id, t, q]) => `<button role="tab" data-sub="${id}" aria-selected="${id === E.sub}"><span class="n">${SUBPESTANAS.findIndex((p) => p[0] === id) + 1}</span><span class="tx"><b>${t}</b><small>${q}</small></span></button>`).join("")}</div></div>`).join("")}</div>
+          <div class="guia-actual" id="guia-actual" role="status" aria-live="polite"></div>
           ${SUBPESTANAS.map(([id]) => `<div class="subvista" id="sub-${id}" ${id === E.sub ? "" : "hidden"}></div>`).join("")}
         </div>
       </div>`;
@@ -81,12 +83,23 @@
       mostrarSub(E.sub);
     });
     for (const [id] of SUBPESTANAS) $("#sub-" + id).dataset.listo = "";
+    pintarGuia();
+  }
+
+  function pintarGuia() {
+    const i = SUBPESTANAS.findIndex((p) => p[0] === E.sub);
+    const [, t, q, d] = SUBPESTANAS[i];
+    const ant = SUBPESTANAS[i - 1];
+    const sig = SUBPESTANAS[i + 1];
+    $("#guia-actual").innerHTML = `<div><span class="paso">Pestaña ${i + 1} de ${SUBPESTANAS.length}</span><b>${t}</b> · ${q}<p>${d}</p></div><div class="fila-accion">${ant ? `<button class="boton claro" type="button" data-ir="${ant[0]}">← ${ant[1]}</button>` : ""}${sig ? `<button class="boton" type="button" data-ir="${sig[0]}">${sig[1]} →</button>` : ""}</div>`;
+    $$("#guia-actual [data-ir]").forEach((b) => b.addEventListener("click", () => { mostrarSub(b.dataset.ir); $(".pestanas-guia").scrollIntoView({ behavior: "smooth", block: "start" }); }));
   }
 
   function mostrarSub(id) {
     E.sub = id;
     $$(".subpestanas button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.sub === id)));
     $$(".subvista").forEach((s) => (s.hidden = s.id !== "sub-" + id));
+    pintarGuia();
     refrescar();
   }
   function refrescar() {

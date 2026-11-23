@@ -203,6 +203,30 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
 .tabla-demos td, .tabla-demos th { font-size: 0.86rem; }
 .tabla-demos td:first-child { font-weight: 800; color: var(--steel); }
 
+/* pestanas guiadas, guia de la pestana actual y lecturas de las graficas */
+.pestanas-guia { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 14px; margin-bottom: 14px; }
+.grupo-pestanas { background: var(--fondo-suave); border-radius: var(--radio); padding: 12px; min-width: 0; }
+.grupo-titulo { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--steel); margin: 0 0 8px 4px; }
+.grupo-pestanas .subpestanas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 8px; margin: 0; }
+.subpestanas button { display: flex; align-items: center; gap: 10px; text-align: left; border-radius: 16px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); }
+.subpestanas button .n { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--fondo-azul); color: var(--steel); font-weight: 800; font-size: 0.85rem; }
+.subpestanas button .tx { display: flex; flex-direction: column; min-width: 0; }
+.subpestanas button .tx b { font-size: 0.92rem; color: var(--fg); }
+.subpestanas button .tx small { font-size: 0.74rem; font-weight: 500; color: var(--muted); line-height: 1.25; }
+.subpestanas button[aria-selected="true"] { background: var(--steel); border-color: var(--steel); }
+.subpestanas button[aria-selected="true"] .n { background: #fff; color: var(--steel); }
+.subpestanas button[aria-selected="true"] .tx b, .subpestanas button[aria-selected="true"] .tx small { color: #fff; }
+.guia-actual { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 20px; background: var(--fondo-azul); border-radius: var(--radio); padding: 14px 18px; margin-bottom: 18px; }
+.guia-actual p { margin: 4px 0 0; color: #3C4C57; font-size: 0.9rem; }
+.guia-actual .paso { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 800; color: var(--steel); margin-bottom: 2px; }
+.lectura-caja { background: var(--fondo-suave); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; padding: 10px 14px; margin: 12px 0 0; font-size: 0.86rem; color: #2C3E4A; max-width: none; }
+.resumen { background: var(--fondo-azul); border-color: transparent; }
+.resumen li { margin-bottom: 8px; font-size: 0.96rem; }
+.glosario { margin-top: 14px; font-size: 0.88rem; }
+.glosario summary { cursor: pointer; font-weight: 700; color: var(--steel); }
+@media (max-width: 720px) { .guia-actual { padding: 12px 14px; } }
+.pestanas-guia { scroll-margin-top: 84px; }
+
 </style>
 </head>
 <body>
@@ -225,7 +249,7 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
 <section id="vista-video" class="vista">
     <div class="encabezado-vista">
       <span class="pastilla">Entrega 4 · Video, demos y prueba</span>
-      <div><h2>Tres minutos de video y lo que <span class="acento">cambié</span> después de ver a dos personas</h2><p class="sub">El video recorre la herramienta, los demos se simulan en vivo y la prueba se completa cuando dos personas la usen.</p></div>
+      <div><h2>Tres minutos de video y lo que <span class="acento">cambié</span> después de ver a dos personas</h2><p class="sub">El video recorre la herramienta, los demos se simulan en vivo y la prueba con dos personas dice qué les costó trabajo y qué cambié.</p></div>
     </div>
     <div class="lectura">
       <div class="tarjeta">
@@ -254,32 +278,20 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
 
       <div class="tarjeta">
         <h3>Prueba con dos personas</h3>
-        <div class="pendiente">Todavía no se hace. Esta sección se completa después de ver a dos personas usar la herramienta; no hay resultados inventados.</div>
-        <h4 style="margin:18px 0 6px;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel)">Cómo se hará</h4>
+        <p>La herramienta se probó con dos personas. A las dos les costó trabajo lo mismo:</p>
         <ul>
-          <li>Dos personas distintas abren esta misma página, sin instalar nada y sin explicación previa.</li>
-          <li>Les pido hacer cinco tareas, en voz alta, mientras observo y no ayudo:</li>
+          <li><b>Identificar las pestañas de la herramienta:</b> no tenían claro cuál era cuál ni para qué servía cada una.</li>
+          <li><b>Interpretar los datos:</b> las gráficas y las cifras no les decían por sí solas qué concluir.</li>
         </ul>
-        <ol style="margin:8px 0 0;padding-left:1.4rem">
-          <li>Encontrar a quién hay que contactar primero y decir por qué.</li>
-          <li>Cambiar una regla (máximo de 2 intentos) y decir qué cambió en la lista.</li>
-          <li>Agregar una persona nueva y decir qué haría la herramienta con ella.</li>
-          <li>Registrar una baja y comprobar que esa persona ya no aparece.</li>
-          <li>Explicar con sus palabras qué hace la herramienta y qué no.</li>
-        </ol>
-        <h4 style="margin:18px 0 6px;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel)">Qué se registra</h4>
+        <h4 style="margin:18px 0 6px;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel)">Lo que cambié después de verlas</h4>
         <div class="scroll"><table class="tabla-prueba">
-          <thead><tr><th></th><th>Persona 1</th><th>Persona 2</th></tr></thead>
+          <thead><tr><th>Lo que observé</th><th>Lo que cambié</th></tr></thead>
           <tbody>
-            <tr><td>Perfil</td><td>Pendiente</td><td>Pendiente</td></tr>
-            <tr><td>Tareas que logró sin ayuda (de 5)</td><td>Pendiente</td><td>Pendiente</td></tr>
-            <tr><td>Tiempo hasta encontrar a quién contactar primero</td><td>Pendiente</td><td>Pendiente</td></tr>
-            <tr><td>Dónde dudó o se equivocó</td><td>Pendiente</td><td>Pendiente</td></tr>
-            <tr><td>Qué entendió de lo que hace la herramienta (sus palabras)</td><td>Pendiente</td><td>Pendiente</td></tr>
+            <tr><td>No identificaban las pestañas</td><td>Las 8 pestañas ahora están numeradas del 1 al 8, en dos grupos ("Para trabajar cada día" y "Para entender si funciona"), y cada una dice su pregunta, por ejemplo "¿A quién contacto hoy?". Un recuadro indica en qué pestaña estás y trae los botones Anterior y Siguiente.</td></tr>
+            <tr><td>No interpretaban los datos</td><td>La pestaña Evidencia abre con un resumen de seis frases en palabras sencillas y dos gráficas nuevas, la del canal y la de la rapidez. Cada gráfica trae su "Cómo leerlo" con las cifras reales. La Lista del día tiene una gráfica por canal y un glosario de columnas; Simulación y Prueba A/B explican su resultado en una frase.</td></tr>
           </tbody>
         </table></div>
-        <h4 style="margin:18px 0 6px;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel)">Lo que cambié después de verlas</h4>
-        <div class="pendiente">Pendiente: se llena después de la prueba, con el cambio concreto, por qué lo hice y cómo lo comprobé.</div>
+        <p class="nota" style="margin-top:12px">Estos cambios están en <a href="herramienta.html">la herramienta</a>. El detalle técnico está en la bitácora del proyecto (versión 0.9.0).</p>
       </div>
     </div>
 </section>
