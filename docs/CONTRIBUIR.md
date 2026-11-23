@@ -31,7 +31,9 @@
 | Agregar una sección a la aplicación Dash | Crear `app/secciones/<nombre>.py` con la interfaz común y registrarla en `app/secciones/__init__.py` | Agregar sus ids a `_valores` en `tests/test_app.py` |
 | Agregar una sección a la web | Nuevo archivo `web/fuente/app/NN_<nombre>.js` con su marca de sección, y `python scripts/ensamblar_web.py` | `scripts/verificar_web.py` para recorrerla |
 | Cambiar los colores o la tipografía | `web/estilos.css` (variables `--steel`, etc.) y `app/assets/estilo.css` / `app/tema.py` | Fuente: `docs/investigacion_clivi.md` |
-| Cambiar el texto del memo, la bitácora o la prueba con dos personas de la página | `web/plantilla.html` | `python scripts/construir_web.py` |
+| Cambiar el texto del memo, la bitácora, los demos o la prueba con dos personas | `web/paginas/memo.html`, `bitacora.html` o `video.html` | `python scripts/construir_web.py` |
+| Cambiar el encabezado, el menú o el pie de todas las páginas | `web/paginas/base.html` (y `ENTREGAS` en `scripts/construir_web.py`) | Reconstruir |
+| Cambiar cómo se ve en pantallas angostas | Bloques `@media` de `web/estilos.css` | `python scripts/revisar_responsivo.py` |
 | Cambiar las preguntas del panel de visibilidad | `docs/panel_visibilidad_prompts.csv` | Ninguna pregunta debe nombrar a la marca (hay una prueba) |
 
 ## Pruebas

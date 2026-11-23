@@ -1,0 +1,39 @@
+<section id="vista-memo" class="vista">
+    <div class="encabezado-vista">
+      <span class="pastilla">Entrega 2 · Memo de una página</span>
+      <div><h2>Qué hice, qué encontré y <span class="acento">qué no funciona todavía</span></h2><p class="sub">Una página sobre el proyecto, sin adornos.</p></div>
+    </div>
+    <div class="lectura">
+      <article class="hoja">
+        <h2>Recontacto de leads</h2>
+        <p class="nota">Misión C · datos ficticios, del 28 de septiembre al 8 de noviembre de 2026</p>
+
+        <h3>Qué hice</h3>
+        <p>Una herramienta que cada mañana dice a quién volver a buscar, cuándo y con qué mensaje, entre las personas que pidieron información y no contestaron. Limpia los datos (fechas en dos formatos, 70 teléfonos repetidos, edades imposibles), aplica reglas de trato, estima con una regresión logística el mejor horario de cada persona, reparte el trabajo con un límite de contactos por hora y propone un mensaje según el intento y la situación (tres pasos con variantes A/B/C que se pueden comparar). Lee las respuestas de la persona con reglas (baja, interés, cita, pregunta, malestar) y pasa a un asesor lo que no entiende. Quien pidió no recibir mensajes queda fuera para siempre. Incluye una simulación, una calculadora de prueba A/B y la carga de datos desde archivos. Existe en Python (229 pruebas) y en esta versión web, que abre sin instalar nada y da las mismas 346 recomendaciones que la de Python.</p>
+
+        <h3>Qué encontré</h3>
+        <ul>
+          <li>El 40.3% de los 1,694 leads contactados no contestó.</li>
+          <li>El canal marca la diferencia: no contesta el 24% de los referidos, el 27% de Google y el 49% de TikTok. El perfil de la persona no aporta.</li>
+          <li>Contactar en los primeros 30 minutos deja sin respuesta al 29%; después de 12 a 24 horas, al 47%.</li>
+          <li>El modelo tiene señal real pero modesta: AUC 0.60 (intervalo 0.55 a 0.65).</li>
+          <li>Simulando un día de lista (346 personas), el horario del modelo hace que contesten 5.7 más, con intervalo de −20 a +31: no se distingue del azar.</li>
+          <li>Comprobar una mejora de 3 puntos pide unas 4,100 personas por grupo, cerca de 200 días con el flujo actual. Una de 8 puntos, unas 560 por grupo y 27 días.</li>
+          <li>Ningún asesor sale de los límites de control: sus diferencias caben en el azar.</li>
+        </ul>
+
+        <h3>Qué no funciona todavía</h3>
+        <ul>
+          <li>No envía mensajes ni se conecta a WhatsApp: los envía el asesor. La lectura de respuestas es por reglas y solo se probó con ejemplos que escribí yo.</li>
+          <li>Las variantes de mensaje son una hipótesis: hoy no hay datos de cuál recupera más. No sé cuánto recuperan.</li>
+          <li>Un modelo de lenguaje local (llama3.1:8b) redactó mensajes seguros y fieles a la situación solo 5 de 12 veces, por eso el texto sale de plantillas.</li>
+          <li>No se puede separar el efecto del horario del de la rapidez del contacto, y solo hay un intento por persona.</li>
+          <li>El modelo no se reentrena en el navegador; la versión en Python sí.</li>
+          <li>No probé la nube, PostgreSQL, MySQL ni el modelo de lenguaje con servicios reales. La prueba con dos personas está pendiente.</li>
+        </ul>
+
+        <h3>Siguiente paso</h3>
+        <p>Probar la herramienta con dos personas y registrar lo que cambie. Después, conectar la lectura de respuestas a un canal real con un asesor al lado y correr la prueba A/B de variantes (unas 560 personas por grupo para ver una diferencia de 8 puntos). Aparte, dejé un plan de 90 días y un panel de medición para que las IA recomienden a Clivi como solución (<code>docs/plan_visibilidad_ia.md</code>).</p>
+      </article>
+    </div>
+</section>

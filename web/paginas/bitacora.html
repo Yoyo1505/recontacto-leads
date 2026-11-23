@@ -1,0 +1,50 @@
+<section id="vista-bitacora" class="vista">
+    <div class="encabezado-vista">
+      <span class="pastilla">Entrega 3 · Bitácora</span>
+      <div><h2>Una entrada por día, con el <span class="acento">uso de IA</span></h2><p class="sub">Solo hay trabajo registrado del 23 de noviembre.</p></div>
+    </div>
+    <div class="lectura">
+
+      <article class="entrada-dia">
+        <div class="fecha">Lunes 23 de noviembre de 2026</div>
+        <h4>Qué hice</h4>
+        <ul>
+          <li><b>Datos:</b> unifiqué dos formatos de fecha, marqué 70 teléfonos repetidos, invalidé 14 edades imposibles y propagué por teléfono si ya compró, rechazó o está en seguimiento.</li>
+          <li><b>Modelo:</b> regresión logística contra un árbol potenciado, evaluados hacia adelante en el tiempo. AUC 0.603 contra 0.599. Me quedé con la logística porque cada recomendación se puede explicar.</li>
+          <li><b>Reglas de trato y asignación:</b> horario de 9 a 20 horas, máximo 3 intentos, 24 horas entre intentos, ventana de 21 días, exclusión de clientes, rechazos, personas en conversación y bajas. Reparto con límite de contactos por hora.</li>
+          <li><b>Mensajes:</b> tres pasos (primer contacto, retomar, cierre) con variantes A/B/C asignadas de forma estable por persona, un validador de seguridad (salud, promesas, urgencia, baja) y otro de fidelidad (menciona la solicitud, sigue la estrategia, no mezcla tú y usted). Medición de variantes con dos proporciones.</li>
+          <li><b>Respuestas:</b> clasificador por reglas con motivo visible; seguridad antes que baja, baja antes que todo; preguntas y ambigüedades pasan a un asesor. Pestañas Mensajes y Respuestas en la versión web, con el motor JavaScript comparado contra Python en 35 respuestas.</li>
+          <li><b>Modelo de lenguaje local:</b> cliente de Ollama y prueba con llama3.1:8b: de 12 mensajes, 5 pasaron seguridad y fidelidad.</li>
+          <li><b>Visibilidad en IA:</b> plan a 90 días, ejemplo de contenido orientado a solución, panel de 36 preguntas con puntuación de respuestas y un experimento con un modelo local.</li>
+          <li><b>Simulación y control estadístico:</b> Monte Carlo con 100 remuestras del modelo, parámetro alpha para lo que no se puede separar, calculadora de prueba A/B, carta p diaria y gráfico de embudo por asesor.</li>
+          <li><b>Datos nuevos:</b> lectura de CSV, JSON, Excel, Parquet, SQLite, bases SQL, web y nube, con informe previo, versiones y lista de bajas, más archivos .bat para todo.</li>
+          <li><b>Aplicación en Dash</b> con siete secciones, un GIF y un video del recorrido.</li>
+          <li><b>Esta versión web:</b> reescribí la lógica en JavaScript para que abra sin instalar nada, y la comparé con la de Python.</li>
+        </ul>
+        <h4>Qué falló y cómo lo corregí</h4>
+        <ul>
+          <li>La primera lista asignaba a 291 personas al mismo martes a las 13:00. Agregué un límite de contactos por hora y un reparto por prioridad.</li>
+          <li>Plotly leyó categorías como "9-10" como fechas. Fijé los ejes como categóricos.</li>
+          <li>Un aviso de error aparecía sin que nadie hiciera clic en la sección de datos. Protegí los callbacks contra el disparo inicial.</li>
+          <li>Al guardar, pandas no admitía cadenas vacías en columnas enteras con nulos. Convertí los números a texto al escribir.</li>
+          <li>Mensajes y nombres de días sin acentos. Los corregí en un solo lugar.</li>
+          <li>La versión web se comparó con Python lead por lead: mismas 346 recomendaciones, mismo orden, horarios, mensajes y exclusiones, con una diferencia de probabilidad de 1e-16.</li>
+          <li>El modelo local escribió mensajes seguros pero ajenos a la situación (0 de 12 fieles). Agregué el validador de fidelidad y un prompt de reescritura: subió a 5 de 12, todavía insuficiente.</li>
+          <li>El clasificador de respuestas perdía la hora en "mañana a las 4", tomaba "no puedo hoy" como una cita y "¿me pueden llamar a las 6?" como una pregunta. Reescribí la lectura de horas y agregué la negación de tiempo.</li>
+        </ul>
+        <h4>Decisiones</h4>
+        <ul>
+          <li>La probabilidad de contestar solo elige el horario: no descarta a nadie. Quien no cabe un día pasa a una cola.</li>
+          <li>Plantillas por defecto y modelo de lenguaje opcional, que solo recibe intento, franja del día y asesor.</li>
+          <li>Horario y rapidez del contacto están confundidos en los datos, así que la simulación recorre un supuesto (alpha) en lugar de afirmar un efecto.</li>
+        </ul>
+        <h4>Uso de IA</h4>
+        <p>Trabajé con Claude Code (modelos Haiku 5.5 y Sonnet 5.5) como asistente de programación. Le pedí el análisis de los dos archivos, el código, las pruebas, la documentación, la aplicación en Dash, la ingesta de datos, los .bat, el GIF y el video, y esta versión web. Yo elegí la misión, el objetivo de postularme a AI engineer, las prioridades (Dash en lugar de Streamlit, una página que abra sin instalar, reglas de trato solo documentadas, archivos .bat, la identidad visual de la empresa) y revisé los resultados. Lo verifiqué ejecutándolo: 229 pruebas en Python, la comparación entre JavaScript y Python, capturas de cada pantalla y la lectura de los errores del servidor. La IA se equivocó en lo que listé arriba; lo detectamos al correr y mirar los resultados. Lo que no está probado con servicios reales (nube, PostgreSQL, MySQL, modelo de lenguaje) lo dejo dicho en el memo.</p>
+      </article>
+
+      <article class="entrada-dia">
+        <div class="fecha">Martes 24 de noviembre de 2026 (hasta la entrega)</div>
+        <div class="pendiente">Pendiente: hacer la prueba con dos personas, registrar lo que cambié después de verlas usar la herramienta y completar esta entrada.</div>
+      </article>
+    </div>
+</section>

@@ -43,9 +43,17 @@ Para que los mensajes los redacte un LLM, define `ANTHROPIC_API_KEY` y agrega `-
 
 ## Versión web: abre sin instalar nada
 
-Enlace público: https://yoyo1505.github.io/recontacto-leads/ (código en https://github.com/Yoyo1505/recontacto-leads).
+Cada entrega tiene su propia página y su propio enlace (código en https://github.com/Yoyo1505/recontacto-leads):
 
-`web/entrega.html` es una sola página con las piezas de la entrega: la herramienta funcionando en el navegador (lista del día con reglas ajustables, evidencia, simulación, prueba A/B y carga de datos), el memo, la bitácora, el video y la prueba con dos personas. Se abre con doble clic (`batbrir_version_web.bat`) o se sube a cualquier hosting; el video `demo.mp4` va en la misma carpeta.
+| Entrega | Enlace |
+|---|---|
+| Portada con las cuatro entregas | https://yoyo1505.github.io/recontacto-leads/ |
+| 1 · Herramienta | https://yoyo1505.github.io/recontacto-leads/herramienta.html |
+| 2 · Memo de una página | https://yoyo1505.github.io/recontacto-leads/memo.html |
+| 3 · Bitácora | https://yoyo1505.github.io/recontacto-leads/bitacora.html |
+| 4 · Video, demos para simular y prueba con dos personas | https://yoyo1505.github.io/recontacto-leads/video.html |
+
+La herramienta funciona en el navegador (lista del día con reglas ajustables, mensajes, respuestas, evidencia, simulación, prueba A/B y carga de datos). El sitio se arma en `web/sitio/` y se abre con doble clic (`bat\abrir_version_web.bat`) o se sube a cualquier hosting; el video `demo.mp4` va en la misma carpeta. Se revisó que conserve su formato desde 360 hasta 1440 px de ancho, incluida la pantalla dividida (`python scripts/revisar_responsivo.py`).
 
 Reescribe la lógica en JavaScript y se comprueba contra la versión en Python: las mismas 346 recomendaciones, en el mismo orden y con los mismos horarios y mensajes (`node web/prueba_motor.js`). No reentrena el modelo ni lee Parquet, bases de datos o la nube: eso lo hace la versión en Python. Para regenerarla: `bat\construir_web.bat`.
 

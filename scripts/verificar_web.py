@@ -1,6 +1,6 @@
-"""Prueba la pagina de entrega en un Chrome real: carga, pestanas, reglas, datos nuevas, baja y errores.
+"""Prueba el sitio de la entrega en un Chrome real: la herramienta (carga, pestanas, reglas, datos nuevos, baja, errores) y las otras cuatro paginas.
 
-Uso:  python scripts/verificar_web.py [ruta o URL de entrega.html] [--capturas carpeta]
+Uso:  python scripts/verificar_web.py [ruta o URL de herramienta.html] [--capturas carpeta]
 Requiere Chrome, websocket-client y pillow. Sale con codigo 1 si algo falla.
 """
 
@@ -40,7 +40,7 @@ def esperar_js(nav, expresion, segundos=40):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("destino", nargs="?", default=str(RAIZ / "web" / "entrega.html"))
+    parser.add_argument("destino", nargs="?", default=str(RAIZ / "web" / "sitio" / "herramienta.html"))
     parser.add_argument("--capturas", default=None)
     args = parser.parse_args()
     url = args.destino if "://" in args.destino else Path(args.destino).resolve().as_uri()
@@ -157,16 +157,26 @@ def main():
         comprobar(nav.js("document.querySelector('#d-kpis .v').textContent") == "1,811", "volver a la base original (1,811 leads)")
         nav.js("document.querySelector('#d-informe').innerHTML = ''; document.querySelector('#d-archivo').dispatchEvent(new Event('change'))")
 
-        for vista in ("memo", "bitacora", "video", "herramienta"):
-            nav.js(f"location.hash = '#{vista}'")
-            time.sleep(0.5)
-            comprobar(nav.js(f"!document.querySelector('#vista-{vista}').hidden"), f"la vista {vista} se muestra")
-            if carpeta and vista != "herramienta":
-                nav.foto().save(carpeta / f"04_{vista}.png")
-        comprobar(nav.js("document.querySelector('#vista-video video').getAttribute('src')") == "demo.mp4", "el video apunta a demo.mp4")
+        errores_herramienta = nav.js("JSON.stringify(window.__errs)")
+        comprobar(errores_herramienta == "[]", f"la herramienta no tuvo errores de JavaScript ({errores_herramienta})")
+        base = url.rsplit("/", 1)[0] + "/"
+        esperado = {"index": 5, "memo": 5, "bitacora": 5, "video": 5}
+        for pagina in ("index", "memo", "bitacora", "video"):
+            nav.ir(base + ("index.html" if pagina == "index" else pagina + ".html"), 1.0)
+            enlaces = nav.js("[...document.querySelectorAll('nav.piezas a')].map(a => a.getAttribute('href') + (a.getAttribute('aria-current') ? '*' : '')).join('|')")
+            comprobar(len(enlaces.split("|")) == esperado[pagina] and enlaces.count("*") == 1, f"{pagina}: menú con las cuatro entregas y la actual marcada ({enlaces})")
+            comprobar(nav.js("document.querySelector('main').textContent.trim().length") > 200, f"{pagina}: tiene contenido")
+            if carpeta:
+                nav.foto().save(carpeta / f"04_{pagina}.png")
+            if pagina == "index":
+                comprobar(nav.js("document.querySelectorAll('.entrega a.pildora').length") == 4, "la portada enlaza las cuatro entregas")
+            if pagina == "video":
+                comprobar(nav.js("document.querySelector('video').getAttribute('src')") == "demo.mp4", "el video apunta a demo.mp4")
+                comprobar(nav.js("document.querySelectorAll('.tabla-demos tbody tr').length") == 7, "hay 7 demos para simular")
+                comprobar("Pendiente" in nav.js("document.querySelector('.tabla-prueba').textContent"), "la prueba con dos personas aparece como pendiente (sin resultados inventados)")
 
         errores = nav.js("JSON.stringify(window.__errs)")
-        comprobar(errores == "[]", f"sin errores de JavaScript ({errores})")
+        comprobar(errores == "[]", f"sin errores de JavaScript en las demás páginas ({errores})")
     finally:
         nav.cerrar()
     print("\nRESULTADO:", "todo bien" if not fallos else f"{len(fallos)} fallas")

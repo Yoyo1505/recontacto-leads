@@ -6,6 +6,6 @@ outputs/
 data/leads_actual.csv
 data/bajas.csv
 data/historial/
-web/demo.mp4
+web/sitio/
 *.env
 .env

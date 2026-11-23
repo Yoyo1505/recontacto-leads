@@ -135,7 +135,7 @@
           <div><b>3</b><span>intentos máximo</span></div>
         </div>
       </div>
-      <p class="nota-hero">Datos ficticios (1,811 registros del 28 de septiembre al 8 de noviembre de 2026). Cambia las reglas de la izquierda y todo se recalcula.</p>
+      <p class="nota-hero">Datos ficticios (1,811 registros del 28 de septiembre al 8 de noviembre de 2026). Cambia las reglas y todo se recalcula.</p>
       <div class="herramienta">
         <aside class="lateral" aria-label="Reglas de trato">
           <h3>Reglas de trato</h3>
@@ -764,23 +764,14 @@
     </div>`;
   }
 
-  // ------------------------------------------------------------------ rutas
-  const VISTAS = ["herramienta", "memo", "bitacora", "video"];
-  function ruta() {
-    const h = (location.hash || "#herramienta").slice(1);
-    const v = VISTAS.includes(h) ? h : "herramienta";
-    VISTAS.forEach((x) => { $("#vista-" + x).hidden = x !== v; });
-    $$("nav.piezas a").forEach((a) => (a.getAttribute("href") === "#" + v ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
-    if (v === "herramienta" && E.lista) refrescar();
-  }
-
+  // ------------------------------------------------------------------ arranque de la pagina
   function iniciar() {
     armar();
     recalcular();
-    ruta();
-    window.addEventListener("hashchange", ruta);
+    refrescar();
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    (mq.addEventListener ? mq.addEventListener.bind(mq, "change") : mq.addListener.bind(mq))(() => { if (!$("#vista-herramienta").hidden) refrescar(); });
+    (mq.addEventListener ? mq.addEventListener.bind(mq, "change") : mq.addListener.bind(mq))(() => refrescar());
+    window.addEventListener("resize", () => { clearTimeout(E.temporizadorRedibujo); E.temporizadorRedibujo = setTimeout(refrescar, 200); });
     window.__recontacto = { E, M, recalcular };
   }
   iniciar();

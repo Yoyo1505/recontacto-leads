@@ -2,6 +2,18 @@
 
 Registro de cambios del proyecto de recontacto de leads. Cada entrada indica qué cambió, por qué y con qué resultado. Las entradas nuevas van arriba.
 
+## 0.8.0 (23-nov-2026)
+
+### Una entrega por página
+- La entrega tiene cuatro partes y ahora cada una es su propia página con su propio enlace: herramienta, memo, bitácora y video con demos y prueba con dos personas. Hay además una portada. Las páginas viven en `web/paginas/` (`base.html` común y un archivo por entrega) y `construir_web.py` las arma en `web/sitio/`.
+- La entrega 4 incluye ahora siete demos para simular, con qué hacer y qué debe pasar (346 personas; 342 con máximo de 2 intentos; 8 plantillas válidas; cita a las 16:00; la pregunta de precio y el malestar pasan a un asesor; un "NO" saca a la persona de la lista; dos personas nuevas llevan la base de 1,811 a 1,813).
+- Un error durante el cambio: al quitar las vistas por ancla, la herramienta no dibujaba la lista porque la primera pintura la hacía la función de rutas. Lo detectó el verificador en Chrome y se movió a la función de arranque.
+
+### Formato en pantalla dividida
+- Síntoma: con la ventana a media pantalla, la página se salía del ancho. Se escribió `scripts/revisar_responsivo.py` para medirlo en lugar de adivinarlo: abre cada página a ocho anchos y lista los elementos que se salen.
+- Causa: en una sola columna, `grid-template-columns: 1fr` equivale a `minmax(auto, 1fr)` y no se encoge por debajo del contenido; las tablas y pestañas empujaban la columna hasta 833 px en una ventana de 683. Solución: `minmax(0, 1fr)` y `min-width: 0` en los hijos, cortes a 1,100, 960, 720 y 420 px y `minmax(min(Npx, 100%), 1fr)` en las rejillas.
+- Resultado: cero desbordes de 360 a 1,440 px en las cinco páginas. No se probó en un teléfono real ni con lectores de pantalla.
+
 ## 0.7.0 (23-nov-2026)
 
 ### Seccionado del código

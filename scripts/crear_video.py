@@ -16,7 +16,7 @@ Salidas
 Requisitos
     - Chrome instalado.
     - La aplicacion corriendo: python app/dash_app.py   (http://127.0.0.1:8050)
-    - La pagina web armada:   python scripts/construir_web.py   (web/entrega.html)
+    - La pagina web armada:   python scripts/construir_web.py   (web/sitio/herramienta.html)
     - pillow y websocket-client.
 
 Uso
@@ -314,11 +314,8 @@ def capturar_web(url):
         nav.js("document.querySelector('#d-informe').scrollIntoView({block: 'center'})")
         time.sleep(0.8)
         escenas.append((nav.foto(), "Sube un archivo o agrega personas: informe antes de guardar", 7))
-        nav.js("location.hash = '#memo'")
-        time.sleep(0.8)
-        nav.js("window.scrollTo(0, 0)")
-        time.sleep(0.4)
-        escenas.append((nav.foto(), "En la misma página: memo, bitácora, video y prueba con dos personas", 6))
+        nav.ir(url.rsplit("/", 1)[0] + "/index.html", 1.2)
+        escenas.append((nav.foto(), "Cuatro entregas, cada una con su propio enlace", 6))
     finally:
         nav.cerrar()
     return escenas
@@ -435,7 +432,7 @@ def grabar(piezas, destino, bitrate):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default="http://127.0.0.1:8050")
-    parser.add_argument("--web", default=str(RAIZ / "web" / "entrega.html"))
+    parser.add_argument("--web", default=str(RAIZ / "web" / "sitio" / "herramienta.html"))
     parser.add_argument("--salida", default=str(RAIZ / "docs" / "demo" / "demo.mp4"))
     parser.add_argument("--bitrate", type=int, default=1500000)
     args = parser.parse_args()

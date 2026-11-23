@@ -1,6 +1,6 @@
 # Arquitectura
 
-La herramienta existe en dos versiones que deben dar el mismo resultado: **Python** (completa: Dash, ingesta de cualquier fuente, reentrenamiento) y **web** (una sola página que abre sin instalar nada). La versión web se verifica contra Python en cada cambio.
+La herramienta existe en dos versiones que deben dar el mismo resultado: **Python** (completa: Dash, ingesta de cualquier fuente, reentrenamiento) y **web** (un sitio que abre sin instalar nada). La versión web se verifica contra Python en cada cambio.
 
 ## Vista general
 
@@ -71,9 +71,9 @@ web/fuente/app/NN_*.js     14 archivos de la interfaz (estado, gráficas, armado
         │  scripts/ensamblar_web.py  (une en orden)
         ▼
 web/motor.js, web/app.js   archivos ensamblados (se versionan; no se editan a mano)
-        │  scripts/construir_web.py  (+ plantilla.html, estilos.css, logo, datos.json, modelo.json, evidencia.json)
+        │  scripts/construir_web.py  (+ paginas/*.html, estilos.css, logo, datos.json, modelo.json, evidencia.json)
         ▼
-web/entrega.html           una sola página; en GitHub Pages es index.html
+web/sitio/                 index, herramienta, memo, bitacora y video (.html) + demo.mp4; se publican tal cual
 ```
 
 `scripts/exportar_web.py` calcula con Python lo que la web necesita: datos, coeficientes del modelo y de 100 modelos bootstrap, evidencia, lista de referencia y casos de prueba. La web **no reentrena**: usa esos coeficientes.

@@ -1,15 +1,25 @@
-"""Arma la pagina de entrega a partir de las piezas de web/.
+"""Arma el sitio de la entrega: una pagina por entrega, en web/sitio/.
 
-Genera web/entrega.html, un documento completo que se abre con doble clic o se sube a cualquier hosting
-(GitHub Pages, Netlify...). El video demo.mp4 va en la misma carpeta.
+Paginas
+    index.html         portada con las cuatro entregas
+    herramienta.html   entrega 1: la herramienta (lleva datos, modelo y motor)
+    memo.html          entrega 2: memo de una pagina
+    bitacora.html      entrega 3: bitacora
+    video.html         entrega 4: video, demos para simular y prueba con dos personas
+    demo.mp4           el video (se copia de docs/demo/demo.mp4)
+
+Cada pagina es un documento completo que se abre con doble clic o se sube a cualquier hosting (GitHub Pages,
+Netlify...). Todas comparten encabezado, estilos y pie; solo la herramienta carga el motor y los datos.
 
 Antes hay que exportar datos y modelo: python scripts/exportar_web.py
 Despues de armar, comprobar el motor: node web/prueba_motor.js
 
 Donde cambiar cosas
-    - Texto del memo, la bitacora y la prueba con dos personas: web/plantilla.html.
-    - Estilos: web/estilos.css. Logica de la herramienta: las secciones de web/fuente/ (motor y app); este script las ensambla.
-    - Capitulos del video: constante CAPITULOS.
+    - Estructura comun (encabezado, pie, menu): web/paginas/base.html.
+    - Contenido de cada entrega: web/paginas/<nombre>.html (memo, bitacora, video, index).
+    - Estilos: web/estilos.css. Logica de la herramienta: las secciones de web/fuente/ (se ensamblan solas).
+    - Orden y nombres del menu: constante ENTREGAS.
+    - Capitulos del video: docs/demo/capitulos.json (los escribe crear_video.py).
 """
 
 import json
@@ -23,11 +33,17 @@ import ensamblar_web  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[1]
 WEB = RAIZ / "web"
+SITIO = WEB / "sitio"
 
-CAPITULOS = (
-    "Capítulos: 0:00 presentación · 0:05 resumen y lista del día · 0:40 ejemplos de conversación · "
-    "1:00 evidencia y simulación · 1:55 prueba A/B · 2:15 datos nuevos y bajas · 2:50 lo que sigue."
+ENTREGAS = (
+    ("index", "Inicio", "Recontacto de leads · Entrega"),
+    ("herramienta", "1 · Herramienta", "Entrega 1 · Herramienta de recontacto"),
+    ("memo", "2 · Memo", "Entrega 2 · Memo de una página"),
+    ("bitacora", "3 · Bitácora", "Entrega 3 · Bitácora"),
+    ("video", "4 · Video y prueba", "Entrega 4 · Video, demos y prueba con dos personas"),
 )
+
+CAPITULOS = "Capítulos: 0:00 presentación · 0:05 el problema · 0:15 recorrido · 2:53 lo que sigue."
 
 
 def capitulos_texto():
@@ -39,8 +55,8 @@ def capitulos_texto():
     return f"Duración {datos['duracion'] // 60}:{datos['duracion'] % 60:02d}. Capítulos: {marcas}."
 
 
-def leer(nombre):
-    return (WEB / nombre).read_text(encoding="utf-8")
+def leer(ruta):
+    return (WEB / ruta).read_text(encoding="utf-8")
 
 
 def compacto(nombre):
@@ -62,29 +78,60 @@ def logo_datos():
     return "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
 
 
+def menu(actual):
+    enlaces = []
+    for clave, texto, _ in ENTREGAS:
+        marca = ' aria-current="page"' if clave == actual else ""
+        enlaces.append(f'      <a href="{clave}.html"{marca}>{texto}</a>')
+    return "\n".join(enlaces)
+
+
+def scripts_herramienta():
+    return "\n".join(
+        [
+            f'<script type="application/json" id="datos-json">{compacto("datos.json")}</script>',
+            f'<script type="application/json" id="modelo-json">{compacto("modelo.json")}</script>',
+            f'<script type="application/json" id="evidencia-json">{compacto("evidencia.json")}</script>',
+            '<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>',
+            '<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>',
+            '<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>',
+            "<script>\n" + leer("motor.js") + "\n</script>",
+            "<script>\n" + leer("app.js") + "\n</script>",
+        ]
+    )
+
+
+def contenido(clave):
+    if clave == "herramienta":
+        return '<section id="vista-herramienta" class="vista"></section>'
+    texto = leer(f"paginas/{clave}.html")
+    return texto.replace("{{CAPITULOS}}", capitulos_texto())
+
+
 def main():
     ensamblar_web.main([])
-    plantilla = leer("plantilla.html")
-    pieza = {
-        "{{CSS}}": leer("estilos.css"),
-        "{{LOGO}}": logo_datos(),
-        "{{DATOS_JSON}}": compacto("datos.json"),
-        "{{MODELO_JSON}}": compacto("modelo.json"),
-        "{{EVID_JSON}}": compacto("evidencia.json"),
-        "{{MOTOR_JS}}": leer("motor.js"),
-        "{{APP_JS}}": leer("app.js"),
-        "{{CAPITULOS}}": capitulos_texto(),
-    }
-    pagina = plantilla
-    for clave, valor in pieza.items():
-        pagina = pagina.replace(clave, valor)
-    if re.search(r"\{\{[A-Z_]+\}\}", pagina):
-        raise SystemExit("Quedaron marcadores sin reemplazar")
-    (WEB / "entrega.html").write_text(pagina, encoding="utf-8")
+    base = leer("paginas/base.html")
+    css = leer("estilos.css")
+    logo = logo_datos()
+    SITIO.mkdir(exist_ok=True)
+    for clave, _, titulo in ENTREGAS:
+        pagina = base
+        for marcador, valor in {
+            "{{TITULO}}": titulo,
+            "{{CSS}}": css,
+            "{{LOGO}}": logo,
+            "{{NAV}}": menu(clave),
+            "{{CONTENIDO}}": contenido(clave),
+            "{{SCRIPTS}}": scripts_herramienta() if clave == "herramienta" else "",
+        }.items():
+            pagina = pagina.replace(marcador, valor)
+        if re.search(r"\{\{[A-Z_]+\}\}", pagina):
+            raise SystemExit(f"Quedaron marcadores sin reemplazar en {clave}.html")
+        (SITIO / f"{clave}.html").write_text(pagina, encoding="utf-8")
+        print(f"{clave}.html", round((SITIO / f"{clave}.html").stat().st_size / 1024), "KB")
     video = RAIZ / "docs" / "demo" / "demo.mp4"
     if video.exists():
-        shutil.copy2(video, WEB / "demo.mp4")
-    print("entrega.html", round((WEB / "entrega.html").stat().st_size / 1024), "KB")
+        shutil.copy2(video, SITIO / "demo.mp4")
 
 
 if __name__ == "__main__":

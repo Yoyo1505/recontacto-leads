@@ -15,11 +15,22 @@ def test_el_motor_web_coincide_con_python():
     assert "coincide con Python" in resultado.stdout
 
 
-def test_la_pagina_de_entrega_esta_armada_sin_marcadores_pendientes():
-    pagina = (RAIZ / "web" / "entrega.html").read_text(encoding="utf-8")
-    assert "{{" not in pagina
-    for pieza in ("Memo de una página", "Bitácora", "Video demo", "Prueba con dos personas", "demo.mp4"):
-        assert pieza in pagina
+def test_cada_entrega_tiene_su_pagina_sin_marcadores_pendientes():
+    sitio = RAIZ / "web" / "sitio"
+    esperado = {
+        "index": ("Cuatro", "herramienta.html", "memo.html", "bitacora.html", "video.html"),
+        "herramienta": ("vista-herramienta", "datos-json"),
+        "memo": ("Entrega 2", "Qué no funciona todavía"),
+        "bitacora": ("Entrega 3", "Uso de IA"),
+        "video": ("Entrega 4", "Demos para simular", "Prueba con dos personas", "demo.mp4"),
+    }
+    for nombre, marcas in esperado.items():
+        pagina = (sitio / f"{nombre}.html").read_text(encoding="utf-8")
+        assert "{{" not in pagina, nombre
+        for marca in marcas:
+            assert marca.lower() in pagina.lower(), (nombre, marca)
+        assert pagina.count(' aria-current="page">') == 1, nombre
+    assert "plotly" not in (sitio / "memo.html").read_text(encoding="utf-8").lower()
 
 
 def test_los_archivos_ensamblados_coinciden_con_las_secciones_de_web_fuente():

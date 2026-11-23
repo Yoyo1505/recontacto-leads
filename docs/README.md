@@ -50,7 +50,7 @@ python scripts/grabar_demo.py     regenera el GIF de la presentación
 | `restaurar_datos.bat [version\|original]` | Vuelve a una versión anterior de los datos |
 | `evaluar.bat` | Recalcula las métricas y las figuras |
 | `probar.bat` | Corre las pruebas |
-| `abrir_version_web.bat` | Abre la versión web (no instala nada) |
+| `abrir_version_web.bat` | Abre el sitio de la entrega (no instala nada) |
 | `construir_web.bat` | Regenera la versión web desde Python, ensambla las secciones y la compara con Python |
 | `grabar_demo.bat` | Regraba el GIF (con la aplicación corriendo) |
 | `crear_video.bat` | Crea el video MP4 de la presentación, con ejemplos de conversación (con la aplicación corriendo) |
@@ -79,7 +79,7 @@ src/recontacto/
   ingesta/           paquete: esquema, utilidades, lectura, validación, fusión, versiones, simulación y cli
   features.py, model.py, policy.py, pipeline.py, mensajes.py, respuestas.py, llm.py
   simulacion.py, control.py, evaluation.py, visibilidad.py, cli.py
-web/                 versión web: fuente/ (secciones de motor y de interfaz), motor.js y app.js (ensamblados), plantilla.html y estilos.css; entrega.html es el resultado
+web/                 versión web: fuente/ (secciones de motor y de interfaz), motor.js y app.js (ensamblados), paginas/ (contenido de cada entrega) y estilos.css; sitio/ es el resultado: una página por entrega
 bat/                 archivos .bat para todo
 data/
   leads_ficticios.csv    base original (nunca se modifica)

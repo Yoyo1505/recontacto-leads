@@ -53,14 +53,15 @@ Restaurar también guarda una copia de la base que se reemplaza. Se conservan 20
 | Abrirla localmente | `bat\abrir_version_web.bat` |
 | Comprobar que JavaScript da lo mismo que Python | `node web\prueba_motor.js` |
 | Comprobar la página en un Chrome real | `python scripts\verificar_web.py [url]` |
-| Publicar | Copiar `web\entrega.html` como `index.html` y `docs\demo\demo.mp4` como `demo.mp4` a la raíz del repositorio de la página |
+| Revisar el formato en pantalla dividida y en teléfono | `python scripts\revisar_responsivo.py [--capturas carpeta]` |
+| Publicar | Copiar el contenido de `web\sitio\` (cinco páginas y `demo.mp4`) a la raíz del repositorio de la página |
 
 ## Lista de verificación antes de entregar una versión
 
 1. `python -m pytest` pasa completo (229 pruebas o más).
 2. `node web\prueba_motor.js` dice "coincide con Python".
 3. `python scripts\ensamblar_web.py --revisar` no reporta nada desactualizado.
-4. `python scripts\verificar_web.py` termina en "todo bien".
+4. `python scripts\verificar_web.py` y `python scripts\revisar_responsivo.py` terminan en "todo bien".
 5. `CHANGELOG.md` tiene la entrada de la versión y `pyproject.toml` el número nuevo.
 6. No hay datos reales en el repositorio (`git status` y revisar `data/`).
 7. Si cambiaron las pantallas: regrabar el video (`bat\crear_video.bat`, con la aplicación corriendo) y el GIF.

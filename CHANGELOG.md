@@ -10,6 +10,25 @@ Tipos de cambio: **Agregado** · **Cambiado** · **Corregido** · **Eliminado** 
 - Resultado de la primera medición real del panel de visibilidad con los motores comerciales (ver `docs/plan_visibilidad_ia.md`).
 - Resultados de la prueba con dos personas (ver `docs/prueba_dos_personas.md`).
 
+## [0.8.0] · 2026-11-23
+
+La entrega pasa de una sola página a cuatro entregas separadas, cada una con su propio enlace, y se corrige el formato en pantallas angostas.
+
+### Cambiado
+- **Una página por entrega** en `web/sitio/`: `index.html` (portada), `herramienta.html` (1), `memo.html` (2), `bitacora.html` (3) y `video.html` (4). Antes todo estaba en una sola página con vistas por ancla. Solo la herramienta carga el motor y los datos (las demás páginas pesan unos 35 KB).
+- `web/plantilla.html` se reemplaza por `web/paginas/` (`base.html` y el contenido de cada entrega). `construir_web.py` arma las cinco páginas.
+- El video se regrabó (3:01): la última escena muestra la portada con las cuatro entregas.
+- `bat\abrir_version_web.bat` abre la portada.
+
+### Agregado
+- Entrega 4 con una tabla de **demos para simular** (7 recorridos con qué hacer y qué debe pasar, con las cifras verificadas) junto al video y la prueba con dos personas.
+- `scripts/revisar_responsivo.py`: abre cada página a 8 anchos (de 1440 a 360 px, incluida la media pantalla) y falla si algo se sale de la ventana; guarda capturas.
+- `verificar_web.py` recorre también las otras cuatro páginas (menú, contenido, video, 7 demos, prueba pendiente).
+
+### Corregido
+- **Se perdía el formato en pantalla dividida.** Por debajo de 1,100 px la herramienta pasaba a una columna, pero la columna `1fr` no podía encogerse por debajo del ancho de sus tablas y pestañas, así que la página se desbordaba hasta 833 px en una ventana de 683. Se cambió a `minmax(0, 1fr)`, se agregaron cortes a 1,100, 960, 720 y 420 px y los `minmax` de las rejillas ya no superan el ancho disponible. Revisado de 360 a 1,440 px: cero desbordes en las cinco páginas.
+- El texto de la herramienta decía "reglas de la izquierda" aun cuando en pantallas angostas quedan arriba.
+
 ## [0.7.0] · 2026-11-23
 
 Versión de preparación para producción: código seccionado, documentación operativa y análisis de pendientes. No cambia el comportamiento de la lista del día.

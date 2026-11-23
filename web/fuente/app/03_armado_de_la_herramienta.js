@@ -27,7 +27,7 @@
           <div><b>3</b><span>intentos máximo</span></div>
         </div>
       </div>
-      <p class="nota-hero">Datos ficticios (1,811 registros del 28 de septiembre al 8 de noviembre de 2026). Cambia las reglas de la izquierda y todo se recalcula.</p>
+      <p class="nota-hero">Datos ficticios (1,811 registros del 28 de septiembre al 8 de noviembre de 2026). Cambia las reglas y todo se recalcula.</p>
       <div class="herramienta">
         <aside class="lateral" aria-label="Reglas de trato">
           <h3>Reglas de trato</h3>

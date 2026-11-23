@@ -20,6 +20,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Archivos web ensamblados al dia
         run: python scripts/ensamblar_web.py --revisar
+      - name: Armar el sitio
+        run: python scripts/construir_web.py
       - name: JavaScript contra Python
         run: node web/prueba_motor.js
       - name: Pruebas de Python
