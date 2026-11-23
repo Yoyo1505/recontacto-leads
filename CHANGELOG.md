@@ -34,6 +34,9 @@ Versión de preparación para producción: código seccionado, documentación op
 - La investigación de Clivi listaba dos cifras de pacientes contradictorias; son cuatro en la misma web (20 mil atendidos, +15,000 activos, 20 mil activos y 10,000 tratados).
 - El informe del experimento mostraba intervalos negativos ("-0%") y un límite con el número de preguntas equivocado.
 
+### Corregido (CI)
+- `fsspec` faltaba en `requirements.txt`: la primera corrida de CI falló en 2 pruebas de lectura desde la nube.
+
 ### Pruebas
 - 229 pruebas (antes 221): secciones nuevas de Dash y verificación de que los archivos web estén ensamblados.
 
