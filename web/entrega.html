@@ -207,7 +207,7 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
         <p class="nota">Misión C · datos ficticios, del 28 de septiembre al 8 de noviembre de 2026</p>
 
         <h3>Qué hice</h3>
-        <p>Una herramienta que cada mañana dice a quién volver a buscar, cuándo y con qué mensaje, entre las personas que pidieron información y no contestaron. Limpia los datos (fechas en dos formatos, 70 teléfonos repetidos, edades imposibles), aplica reglas de trato, estima con una regresión logística el mejor horario de cada persona, reparte el trabajo con un límite de contactos por hora y propone uno de tres mensajes según el intento. Quien pidió no recibir mensajes queda fuera para siempre. Incluye una simulación, una calculadora de prueba A/B y la carga de datos desde archivos. Existe en Python (168 pruebas) y en esta versión web, que abre sin instalar nada y da las mismas 346 recomendaciones que la de Python.</p>
+        <p>Una herramienta que cada mañana dice a quién volver a buscar, cuándo y con qué mensaje, entre las personas que pidieron información y no contestaron. Limpia los datos (fechas en dos formatos, 70 teléfonos repetidos, edades imposibles), aplica reglas de trato, estima con una regresión logística el mejor horario de cada persona, reparte el trabajo con un límite de contactos por hora y propone un mensaje según el intento y la situación (tres pasos con variantes A/B/C que se pueden comparar). Lee las respuestas de la persona con reglas (baja, interés, cita, pregunta, malestar) y pasa a un asesor lo que no entiende. Quien pidió no recibir mensajes queda fuera para siempre. Incluye una simulación, una calculadora de prueba A/B y la carga de datos desde archivos. Existe en Python (221 pruebas) y en esta versión web, que abre sin instalar nada y da las mismas 346 recomendaciones que la de Python.</p>
 
         <h3>Qué encontré</h3>
         <ul>
@@ -222,15 +222,16 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
 
         <h3>Qué no funciona todavía</h3>
         <ul>
-          <li>No envía mensajes ni lee respuestas: los envía el asesor y la baja se registra a mano.</li>
-          <li>Los mensajes son tres plantillas con criterio, no probadas con respuestas reales. No sé cuánto recuperan.</li>
+          <li>No envía mensajes ni se conecta a WhatsApp: los envía el asesor. La lectura de respuestas es por reglas y solo se probó con ejemplos que escribí yo.</li>
+          <li>Las variantes de mensaje son una hipótesis: hoy no hay datos de cuál recupera más. No sé cuánto recuperan.</li>
+          <li>Un modelo de lenguaje local (llama3.1:8b) redactó mensajes seguros y fieles a la situación solo 5 de 12 veces, por eso el texto sale de plantillas.</li>
           <li>No se puede separar el efecto del horario del de la rapidez del contacto, y solo hay un intento por persona.</li>
           <li>El modelo no se reentrena en el navegador; la versión en Python sí.</li>
           <li>No probé la nube, PostgreSQL, MySQL ni el modelo de lenguaje con servicios reales. La prueba con dos personas está pendiente.</li>
         </ul>
 
         <h3>Siguiente paso</h3>
-        <p>Probar la herramienta con dos personas, escribir mensajes por situación con variantes para comparar, y hacer que las respuestas actualicen solas el estado de cada persona. Después, la prueba A/B para medir cuánto recupera cada mensaje.</p>
+        <p>Probar la herramienta con dos personas y registrar lo que cambie. Después, conectar la lectura de respuestas a un canal real con un asesor al lado y correr la prueba A/B de variantes (unas 560 personas por grupo para ver una diferencia de 8 puntos). Aparte, dejé un plan de 90 días y un panel de medición para que las IA recomienden a Clivi como solución (<code>docs/plan_visibilidad_ia.md</code>).</p>
       </article>
     </div>
   </section>
@@ -249,7 +250,10 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
           <li><b>Datos:</b> unifiqué dos formatos de fecha, marqué 70 teléfonos repetidos, invalidé 14 edades imposibles y propagué por teléfono si ya compró, rechazó o está en seguimiento.</li>
           <li><b>Modelo:</b> regresión logística contra un árbol potenciado, evaluados hacia adelante en el tiempo. AUC 0.603 contra 0.599. Me quedé con la logística porque cada recomendación se puede explicar.</li>
           <li><b>Reglas de trato y asignación:</b> horario de 9 a 20 horas, máximo 3 intentos, 24 horas entre intentos, ventana de 21 días, exclusión de clientes, rechazos, personas en conversación y bajas. Reparto con límite de contactos por hora.</li>
-          <li><b>Mensajes:</b> tres plantillas (primer contacto, retomar, cierre) y un validador que rechaza menciones de salud, promesas, urgencia y mensajes sin opción de baja.</li>
+          <li><b>Mensajes:</b> tres pasos (primer contacto, retomar, cierre) con variantes A/B/C asignadas de forma estable por persona, un validador de seguridad (salud, promesas, urgencia, baja) y otro de fidelidad (menciona la solicitud, sigue la estrategia, no mezcla tú y usted). Medición de variantes con dos proporciones.</li>
+          <li><b>Respuestas:</b> clasificador por reglas con motivo visible; seguridad antes que baja, baja antes que todo; preguntas y ambigüedades pasan a un asesor. Pestañas Mensajes y Respuestas en la versión web, con el motor JavaScript comparado contra Python en 35 respuestas.</li>
+          <li><b>Modelo de lenguaje local:</b> cliente de Ollama y prueba con llama3.1:8b: de 12 mensajes, 5 pasaron seguridad y fidelidad.</li>
+          <li><b>Visibilidad en IA:</b> plan a 90 días, ejemplo de contenido orientado a solución, panel de 36 preguntas con puntuación de respuestas y un experimento con un modelo local.</li>
           <li><b>Simulación y control estadístico:</b> Monte Carlo con 100 remuestras del modelo, parámetro alpha para lo que no se puede separar, calculadora de prueba A/B, carta p diaria y gráfico de embudo por asesor.</li>
           <li><b>Datos nuevos:</b> lectura de CSV, JSON, Excel, Parquet, SQLite, bases SQL, web y nube, con informe previo, versiones y lista de bajas, más archivos .bat para todo.</li>
           <li><b>Aplicación en Dash</b> con siete secciones, un GIF y un video del recorrido.</li>
@@ -263,6 +267,8 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
           <li>Al guardar, pandas no admitía cadenas vacías en columnas enteras con nulos. Convertí los números a texto al escribir.</li>
           <li>Mensajes y nombres de días sin acentos. Los corregí en un solo lugar.</li>
           <li>La versión web se comparó con Python lead por lead: mismas 346 recomendaciones, mismo orden, horarios, mensajes y exclusiones, con una diferencia de probabilidad de 1e-16.</li>
+          <li>El modelo local escribió mensajes seguros pero ajenos a la situación (0 de 12 fieles). Agregué el validador de fidelidad y un prompt de reescritura: subió a 5 de 12, todavía insuficiente.</li>
+          <li>El clasificador de respuestas perdía la hora en "mañana a las 4", tomaba "no puedo hoy" como una cita y "¿me pueden llamar a las 6?" como una pregunta. Reescribí la lectura de horas y agregué la negación de tiempo.</li>
         </ul>
         <h4>Decisiones</h4>
         <ul>
@@ -271,7 +277,7 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
           <li>Horario y rapidez del contacto están confundidos en los datos, así que la simulación recorre un supuesto (alpha) en lugar de afirmar un efecto.</li>
         </ul>
         <h4>Uso de IA</h4>
-        <p>Trabajé con Claude Code (modelos Haiku 5.5 y Sonnet 5.5) como asistente de programación. Le pedí el análisis de los dos archivos, el código, las pruebas, la documentación, la aplicación en Dash, la ingesta de datos, los .bat, el GIF y el video, y esta versión web. Yo elegí la misión, el objetivo de postularme a AI engineer, las prioridades (Dash en lugar de Streamlit, una página que abra sin instalar, reglas de trato solo documentadas, archivos .bat, la identidad visual de la empresa) y revisé los resultados. Lo verifiqué ejecutándolo: 168 pruebas en Python, la comparación entre JavaScript y Python, capturas de cada pantalla y la lectura de los errores del servidor. La IA se equivocó en lo que listé arriba; lo detectamos al correr y mirar los resultados. Lo que no está probado con servicios reales (nube, PostgreSQL, MySQL, modelo de lenguaje) lo dejo dicho en el memo.</p>
+        <p>Trabajé con Claude Code (modelos Haiku 5.5 y Sonnet 5.5) como asistente de programación. Le pedí el análisis de los dos archivos, el código, las pruebas, la documentación, la aplicación en Dash, la ingesta de datos, los .bat, el GIF y el video, y esta versión web. Yo elegí la misión, el objetivo de postularme a AI engineer, las prioridades (Dash en lugar de Streamlit, una página que abra sin instalar, reglas de trato solo documentadas, archivos .bat, la identidad visual de la empresa) y revisé los resultados. Lo verifiqué ejecutándolo: 221 pruebas en Python, la comparación entre JavaScript y Python, capturas de cada pantalla y la lectura de los errores del servidor. La IA se equivocó en lo que listé arriba; lo detectamos al correr y mirar los resultados. Lo que no está probado con servicios reales (nube, PostgreSQL, MySQL, modelo de lenguaje) lo dejo dicho en el memo.</p>
       </article>
 
       <article class="entrada-dia">
@@ -290,7 +296,7 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
       <div class="tarjeta">
         <h3>Video demo</h3>
         <video controls preload="metadata" src="demo.mp4">Tu navegador no puede reproducir este video.</video>
-        <p class="nota" style="margin-top:10px">Duración 2:59. Capítulos: 0:00 Presentación · 0:05 El problema · 0:15 Recorrido de la herramienta · 0:32 Conversaciones de ejemplo · 0:59 Evidencia · 1:12 Simulación · 1:26 Prueba A/B · 1:34 Datos nuevos · 1:49 Versión web, sin instalar · 2:20 Lo que encontré · 2:36 Lo que no funciona todavía · 2:50 Lo que sigue.</p>
+        <p class="nota" style="margin-top:10px">Duración 3:02. Capítulos: 0:00 Presentación · 0:05 El problema · 0:15 Recorrido de la herramienta · 0:36 Evidencia · 0:49 Simulación · 1:03 Prueba A/B · 1:11 Datos nuevos · 1:26 Versión web, sin instalar · 1:38 Mensajes y respuestas · 2:23 Lo que encontré · 2:39 Lo que no funciona todavía · 2:53 Lo que sigue.</p>
         <p class="nota">Las conversaciones del video son un ejemplo ilustrativo: las respuestas de la persona son inventadas y la herramienta todavía no lee respuestas.</p>
       </div>
 

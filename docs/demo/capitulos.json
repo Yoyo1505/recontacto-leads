@@ -1,5 +1,5 @@
 {
- "duracion": 179,
+ "duracion": 182,
  "capitulos": [
   {
    "inicio": 0,
@@ -14,39 +14,39 @@
    "titulo": "Recorrido de la herramienta"
   },
   {
-   "inicio": 32,
-   "titulo": "Conversaciones de ejemplo"
-  },
-  {
-   "inicio": 59,
+   "inicio": 36,
    "titulo": "Evidencia"
   },
   {
-   "inicio": 72,
+   "inicio": 49,
    "titulo": "Simulación"
   },
   {
-   "inicio": 86,
+   "inicio": 63,
    "titulo": "Prueba A/B"
   },
   {
-   "inicio": 94,
+   "inicio": 71,
    "titulo": "Datos nuevos"
   },
   {
-   "inicio": 109,
+   "inicio": 86,
    "titulo": "Versión web, sin instalar"
   },
   {
-   "inicio": 140,
+   "inicio": 98,
+   "titulo": "Mensajes y respuestas"
+  },
+  {
+   "inicio": 143,
    "titulo": "Lo que encontré"
   },
   {
-   "inicio": 156,
+   "inicio": 159,
    "titulo": "Lo que no funciona todavía"
   },
   {
-   "inicio": 170,
+   "inicio": 173,
    "titulo": "Lo que sigue"
   }
  ]

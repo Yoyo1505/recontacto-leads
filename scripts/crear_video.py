@@ -115,10 +115,10 @@ TARJETA_HALLAZGOS = (
 TARJETA_LIMITES = (
     "Lo que no funciona todavía",
     [
-        "No envía mensajes ni lee respuestas: la baja se registra a mano",
-        "Los mensajes son tres plantillas, no probadas con respuestas reales",
+        "No envía mensajes ni se conecta a WhatsApp: la lectura de respuestas es por reglas",
+        "Las variantes de mensaje son hipótesis: no hay datos de cuál recupera más",
+        "Un modelo de lenguaje local solo acertó 5 de 12 mensajes: por eso hay plantillas",
         "Horario y rapidez del contacto no se pueden separar con estos datos",
-        "El modelo no se reentrena en el navegador",
         "No probé nube, PostgreSQL, MySQL ni el modelo de lenguaje con servicios reales",
         "La prueba con dos personas está pendiente",
     ],
@@ -127,9 +127,9 @@ TARJETA_CIERRE = (
     "Lo que sigue",
     [
         "Probar con dos personas y registrar lo que cambie",
-        "Mensajes por situación, con variantes para comparar",
-        "Que las respuestas (sí, no, a tal hora) actualicen el estado solas",
-        "Prueba A/B para medir cuánto recupera cada mensaje",
+        "Conectar la lectura de respuestas a WhatsApp con un asesor al lado",
+        "Prueba A/B de variantes: unas 560 personas por grupo para ver 8 puntos",
+        "Plan de visibilidad en IA para que recomienden a Clivi como solución",
     ],
 )
 
@@ -288,6 +288,21 @@ def capturar_web(url):
         nav.js("document.querySelector('#l-detalle').scrollIntoView({block: 'center'})")
         time.sleep(0.8)
         escenas.append((nav.foto(), "Cada recomendación trae su motivo y su mensaje validado", 6))
+        nav.js("window.scrollTo(0, 0); document.querySelector('[data-sub=\"mensajes\"]').click()")
+        time.sleep(1.0)
+        nav.js("document.querySelector('#sub-mensajes table').scrollIntoView({block: 'start'})")
+        time.sleep(0.8)
+        escenas.append((nav.foto(), "Mensajes por situación: tres pasos, variantes para comparar", 9))
+        nav.js("window.scrollTo(0, 0); document.querySelector('[data-sub=\"respuestas\"]').click()")
+        time.sleep(1.0)
+        nav.js("[...document.querySelectorAll('#c-ejemplos button')].find(b => b.dataset.ej === 'Sí, llámame mañana a las 4').click()")
+        time.sleep(0.8)
+        nav.js("document.querySelector('#c-chat').scrollIntoView({block: 'center'})")
+        time.sleep(0.8)
+        escenas.append((nav.foto(), "Lee la respuesta: entiende la hora y propone confirmar", 9))
+        nav.js("[...document.querySelectorAll('#c-ejemplos button')].find(b => b.dataset.ej === 'Me siento mal desde ayer').click()")
+        time.sleep(0.8)
+        escenas.append((nav.foto(), "Ante un malestar no vende: pasa a un asesor y remite al 911", 8))
         nav.js("window.scrollTo(0, 0); document.querySelector('[data-sub=\"simulacion\"]').click()")
         demo.esperar(nav, "#s-kpis .kpi")
         time.sleep(2.0)
@@ -326,11 +341,9 @@ def armar_piezas(fotogramas, escenas_web):
         elif subtitulo.startswith("Datos:"):
             capitulo = "Datos nuevos"
         piezas.append((con_subtitulo(imagen, subtitulo), ms / 1000 * FACTOR_APP, capitulo))
-        if "trae su mensaje" in subtitulo:
-            piezas.append((tarjeta_conversacion(CONVERSACION_RETOMA), 12, "Conversaciones de ejemplo"))
-            piezas.append((tarjeta_conversacion(CONVERSACION_BAJA), 11, None))
     for i, (imagen, subtitulo, segundos) in enumerate(escenas_web):
-        piezas.append((con_subtitulo(imagen, subtitulo), segundos, "Versión web, sin instalar" if i == 0 else None))
+        capitulo = "Versión web, sin instalar" if i == 0 else "Mensajes y respuestas" if subtitulo.startswith("Mensajes por") else None
+        piezas.append((con_subtitulo(imagen, subtitulo), segundos, capitulo))
     piezas.append((tarjeta_lista(TARJETA_HALLAZGOS, 28), 16, "Lo que encontré"))
     piezas.append((tarjeta_lista(TARJETA_LIMITES, 28), 14, "Lo que no funciona todavía"))
     piezas.append((tarjeta_lista(TARJETA_CIERRE), 9, "Lo que sigue"))
