@@ -54,7 +54,7 @@ Restaurar también guarda una copia de la base que se reemplaza. Se conservan 20
 | Comprobar que JavaScript da lo mismo que Python | `node web\prueba_motor.js` |
 | Comprobar la página en un Chrome real | `python scripts\verificar_web.py [url]` |
 | Revisar el formato en pantalla dividida y en teléfono | `python scripts\revisar_responsivo.py [--capturas carpeta]` |
-| Publicar | Copiar el contenido de `web\sitio\` (cinco páginas y `demo.mp4`) a la raíz del repositorio de la página |
+| Publicar | Copiar el contenido de `web\sitio\` (cuatro páginas, la redirección y `demo.mp4`) a la raíz del repositorio de la página |
 
 ## Lista de verificación antes de entregar una versión
 

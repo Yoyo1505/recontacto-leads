@@ -4,7 +4,7 @@
 |---|---|---|
 | `exportar_web.py` | Calcula con Python los datos, el modelo y los casos de prueba de la versión web | Tras cambiar datos, modelo o reglas |
 | `ensamblar_web.py` | Une `web/fuente/` en `web/motor.js` y `web/app.js` (`--revisar` solo comprueba) | Tras editar la web |
-| `construir_web.py` | Ensambla y arma las cinco páginas de `web/sitio/` | Antes de publicar |
+| `construir_web.py` | Ensambla y arma las cuatro páginas de `web/sitio/` | Antes de publicar |
 | `revisar_responsivo.py` | Comprueba que cada página conserve su formato de 360 a 1440 px (pantalla dividida incluida) | Tras cambiar estilos o contenido |
 | `verificar_web.py` | Recorre la herramienta y las demás páginas en un Chrome real; acepta una URL | Antes de publicar |
 | `grabar_demo.py` | Regraba el GIF de la aplicación (con la app corriendo) | Si cambian las pantallas |

@@ -17,5 +17,5 @@ node web/prueba_motor.js              JavaScript contra Python
 | `test_simulacion.py` | Monte Carlo, potencia, intervalos y control |
 | `test_visibilidad.py` | Panel de visibilidad en IA |
 | `test_app.py` | Cada sección de Dash, cada callback y el flujo completo de datos |
-| `test_web.py` | JavaScript contra Python, las cinco páginas armadas y archivos ensamblados al día |
+| `test_web.py` | JavaScript contra Python, las cuatro páginas armadas y archivos ensamblados al día |
 | `conftest.py` | `entorno`: aísla las rutas de datos en una carpeta temporal |

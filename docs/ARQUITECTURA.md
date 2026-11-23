@@ -73,7 +73,7 @@ web/fuente/app/NN_*.js     14 archivos de la interfaz (estado, gráficas, armado
 web/motor.js, web/app.js   archivos ensamblados (se versionan; no se editan a mano)
         │  scripts/construir_web.py  (+ paginas/*.html, estilos.css, logo, datos.json, modelo.json, evidencia.json)
         ▼
-web/sitio/                 index, herramienta, memo, bitacora y video (.html) + demo.mp4; se publican tal cual
+web/sitio/                 herramienta, memo, bitacora y video (.html), index.html (redirige) + demo.mp4; se publican tal cual
 ```
 
 `scripts/exportar_web.py` calcula con Python lo que la web necesita: datos, coeficientes del modelo y de 100 modelos bootstrap, evidencia, lista de referencia y casos de prueba. La web **no reentrena**: usa esos coeficientes.

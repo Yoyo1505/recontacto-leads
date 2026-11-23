@@ -28,7 +28,7 @@ import grabar_demo as g  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[1]
 ANCHOS = (1440, 1100, 960, 800, 683, 540, 390, 360)
-PAGINAS = ("index", "herramienta", "memo", "bitacora", "video")
+PAGINAS = ("herramienta", "memo", "bitacora", "video")
 
 BUSCAR_DESBORDES = """
 (() => {
@@ -55,7 +55,7 @@ BUSCAR_DESBORDES = """
 
 def url_de(base, pagina):
     if "://" in base:
-        return base.rstrip("/") + "/" + ("" if pagina == "index" else pagina + ".html")
+        return base.rstrip("/") + "/" + pagina + ".html"
     return (Path(base) / f"{pagina}.html").resolve().as_uri()
 
 

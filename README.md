@@ -47,8 +47,7 @@ Cada entrega tiene su propia página y su propio enlace (código en https://gith
 
 | Entrega | Enlace |
 |---|---|
-| Portada con las cuatro entregas | https://yoyo1505.github.io/recontacto-leads/ |
-| 1 · Herramienta | https://yoyo1505.github.io/recontacto-leads/herramienta.html |
+| 1 · Herramienta (también abre en la dirección raíz) | https://yoyo1505.github.io/recontacto-leads/herramienta.html |
 | 2 · Memo de una página | https://yoyo1505.github.io/recontacto-leads/memo.html |
 | 3 · Bitácora | https://yoyo1505.github.io/recontacto-leads/bitacora.html |
 | 4 · Video, demos para simular y prueba con dos personas | https://yoyo1505.github.io/recontacto-leads/video.html |

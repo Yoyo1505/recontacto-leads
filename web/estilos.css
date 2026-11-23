@@ -170,7 +170,6 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
   .entrada-dia { padding: 20px 18px; }
   .hoja { padding: 20px 18px; }
   .kpi .v { font-size: 1.6rem; }
-  .entrega { grid-template-columns: 1fr; }
   nav.piezas a { padding: 7px 11px; font-size: 0.85rem; }
 }
 
@@ -190,16 +189,6 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
 .burbuja.sugerida { background: #fff; border: 1px dashed var(--steel); }
 .burbuja.sistema { background: var(--fondo-suave); color: var(--muted); align-self: center; font-size: 0.82rem; border-radius: 999px; }
 code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; font-size: 0.85em; }
-
-/* portada: las cuatro entregas */
-.hero-inicio { grid-template-columns: minmax(0, 1fr); align-items: start; }
-.hero-inicio h2 .resalte { color: #9FD8EE; }
-.nota-hero-claro { color: #B7D7E6; font-size: 0.9rem; margin: 0; }
-.entregas { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 18px; }
-.entrega { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 18px; align-items: start; margin: 0; max-width: none; }
-.entrega .numero { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: var(--steel); color: #fff; font-size: 1.6rem; font-weight: 800; }
-.entrega h3 { font-size: 1.3rem; margin-bottom: 6px; }
-.entrega p { margin-bottom: 14px; }
 
 /* demos para simular */
 .tabla-demos td, .tabla-demos th { font-size: 0.86rem; }

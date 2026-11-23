@@ -18,8 +18,7 @@ def test_el_motor_web_coincide_con_python():
 def test_cada_entrega_tiene_su_pagina_sin_marcadores_pendientes():
     sitio = RAIZ / "web" / "sitio"
     esperado = {
-        "index": ("Cuatro", "herramienta.html", "memo.html", "bitacora.html", "video.html"),
-        "herramienta": ("vista-herramienta", "datos-json"),
+        "herramienta": ("vista-herramienta", "datos-json", "memo.html", "bitacora.html", "video.html"),
         "memo": ("Entrega 2", "Qué no funciona todavía"),
         "bitacora": ("Entrega 3", "Uso de IA"),
         "video": ("Entrega 4", "Demos para simular", "Prueba con dos personas", "demo.mp4"),
@@ -30,6 +29,8 @@ def test_cada_entrega_tiene_su_pagina_sin_marcadores_pendientes():
         for marca in marcas:
             assert marca.lower() in pagina.lower(), (nombre, marca)
         assert pagina.count(' aria-current="page">') == 1, nombre
+    redireccion = (sitio / "index.html").read_text(encoding="utf-8")
+    assert "herramienta.html" in redireccion and len(redireccion) < 1000
     assert "plotly" not in (sitio / "memo.html").read_text(encoding="utf-8").lower()
 
 

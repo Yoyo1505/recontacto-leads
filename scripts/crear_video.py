@@ -314,8 +314,8 @@ def capturar_web(url):
         nav.js("document.querySelector('#d-informe').scrollIntoView({block: 'center'})")
         time.sleep(0.8)
         escenas.append((nav.foto(), "Sube un archivo o agrega personas: informe antes de guardar", 7))
-        nav.ir(url.rsplit("/", 1)[0] + "/index.html", 1.2)
-        escenas.append((nav.foto(), "Cuatro entregas, cada una con su propio enlace", 6))
+        nav.ir(url.rsplit("/", 1)[0] + "/video.html", 1.2)
+        escenas.append((nav.foto(), "Cuatro entregas, cada una en su página: herramienta, memo, bitácora y video", 6))
     finally:
         nav.cerrar()
     return escenas

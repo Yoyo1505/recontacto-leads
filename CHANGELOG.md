@@ -10,6 +10,15 @@ Tipos de cambio: **Agregado** · **Cambiado** · **Corregido** · **Eliminado** 
 - Resultado de la primera medición real del panel de visibilidad con los motores comerciales (ver `docs/plan_visibilidad_ia.md`).
 - Resultados de la prueba con dos personas (ver `docs/prueba_dos_personas.md`).
 
+## [0.8.1] · 2026-11-23
+
+### Eliminado
+- La portada "Inicio" con las cuatro entregas: el menú de cada página ya enlaza las cuatro. `index.html` queda solo como una redirección a `herramienta.html` para que la dirección raíz del sitio siga funcionando. El logo enlaza a la herramienta.
+
+### Cambiado
+- El sitio tiene cuatro páginas (herramienta, memo, bitácora y video) y el menú, cuatro enlaces.
+- El video se regrabó: la última escena muestra la entrega 4 en lugar de la portada.
+
 ## [0.8.0] · 2026-11-23
 
 La entrega pasa de una sola página a cuatro entregas separadas, cada una con su propio enlace, y se corrige el formato en pantallas angostas.

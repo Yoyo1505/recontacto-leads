@@ -2,6 +2,10 @@
 
 Registro de cambios del proyecto de recontacto de leads. Cada entrada indica qué cambió, por qué y con qué resultado. Las entradas nuevas van arriba.
 
+## 0.8.1 (23-nov-2026)
+
+- Se eliminó la portada "Inicio": con el menú de cuatro entregas en cada página era redundante. `index.html` ahora solo redirige a la herramienta (si no, la dirección raíz del sitio publicado dejaría de abrir algo). Se quitaron la página, sus estilos y sus comprobaciones, y se regrabó el video porque su última escena mostraba la portada.
+
 ## 0.8.0 (23-nov-2026)
 
 ### Una entrega por página
