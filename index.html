@@ -162,6 +162,17 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
   .hoja { padding: 22px; }
 }
 
+/* conversacion de ejemplo (pestana Respuestas) */
+.chat { display: flex; flex-direction: column; gap: 10px; }
+.burbuja { max-width: 88%; padding: 12px 16px; border-radius: 18px; line-height: 1.45; font-size: 0.92rem; }
+.burbuja .quien { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+.burbuja.asesor { background: var(--fondo-azul); border-bottom-left-radius: 6px; align-self: flex-start; }
+.burbuja.persona { background: var(--steel); color: #fff; border-bottom-right-radius: 6px; align-self: flex-end; }
+.burbuja.persona .quien { color: rgba(255,255,255,0.8); }
+.burbuja.sugerida { background: #fff; border: 1px dashed var(--steel); }
+.burbuja.sistema { background: var(--fondo-suave); color: var(--muted); align-self: center; font-size: 0.82rem; border-radius: 999px; }
+code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; font-size: 0.85em; }
+
 </style>
 </head>
 <body>
@@ -596,12 +607,56 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     const parte = horaDe(ms) < 12 ? "por la mañana" : "por la tarde";
     return fmtDia(ms) === fmtDia(ahora) ? `hoy ${parte}` : `el ${DIAS[diaSemana(ms)]} ${parte}`;
   }
+  const BIBLIOTECA = {
+    primer_contacto: {
+      A: "{recibimos} y con gusto te la compartimos. ¿Te parece bien si te llamamos {franja}?",
+      B: "{recibimos}. ¿Prefieres que te llamemos o que te escribamos por aquí? Dime qué te acomoda mejor.",
+      C: "{recibimos}. En una llamada corta te explico cómo funciona y resuelvo tus dudas. ¿Cuándo te viene bien?",
+    },
+    retoma: {
+      A: "Intenté comunicarme contigo por tu solicitud de información y no logramos hablar. Cuando tengas un momento, dime si prefieres que te llame o seguir por mensaje.",
+      B: "Te busqué por tu solicitud de información y no pudimos hablar. ¿Te escribo con la información por aquí, o prefieres que te llame {franja}?",
+      C: "Sigo con tu solicitud de información a la mano. ¿Quieres que la retomemos? Con un «sí» te busco en el horario que prefieras.",
+    },
+    cierre: {
+      A: "Este es mi último mensaje sobre tu solicitud de información, para no insistirte. Si más adelante quieres retomarla, aquí estaremos.",
+      B: "No quiero molestarte, así que este es mi último mensaje. Tu solicitud queda guardada: cuando quieras retomarla, solo respóndeme aquí.",
+    },
+  };
+  const ESTRATEGIAS = {
+    primer_contacto: { A: "propone un horario concreto", B: "deja elegir el canal", C: "explica el siguiente paso y pregunta cuándo" },
+    retoma: { A: "da el control sobre cómo seguir", B: "ofrece las dos opciones con horario", C: "pide un sí sencillo" },
+    cierre: { A: "libera la presión", B: "deja la solicitud guardada" },
+  };
+  const etapaDe = (c) => (c.nunca ? "primer_contacto" : c.ultimo ? "cierre" : "retoma");
+
+  const TABLA_CRC = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  function crc32(texto) {
+    let c = 0xffffffff;
+    for (const byte of new TextEncoder().encode(texto)) c = TABLA_CRC[(c ^ byte) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  }
+  function elegirVariante(leadId, etapa) {
+    const letras = Object.keys(BIBLIOTECA[etapa]).sort();
+    return letras[crc32(`${leadId}:${etapa}`) % letras.length];
+  }
+
   function plantilla(c) {
+    const etapa = etapaDe(c);
+    let letra = c.variante || "A";
+    if (!BIBLIOTECA[etapa][letra]) letra = "A";
+    const recibimos = c.origenIa ? "Recibimos la solicitud de información que enviaste a través de un asistente de inteligencia artificial" : "Recibimos tu solicitud de información";
     const saludo = c.asesor ? `Hola, te escribe ${c.asesor} de ${MARCA}.` : `Hola, te escribimos de ${MARCA}.`;
-    let cuerpo;
-    if (c.nunca) cuerpo = `Recibimos tu solicitud de información y con gusto te la compartimos. ¿Te parece bien si te llamamos ${c.franja || "hoy"}?`;
-    else if (c.ultimo) cuerpo = "Este es mi último mensaje sobre tu solicitud de información, para no insistirte. Si más adelante quieres retomarla, aquí estaremos.";
-    else cuerpo = "Intenté comunicarme contigo por tu solicitud de información y no logramos hablar. Cuando tengas un momento, dime si prefieres que te llame o seguir por mensaje.";
+    let cuerpo = BIBLIOTECA[etapa][letra].replace("{recibimos}", recibimos).replace("{franja}", c.franja || "hoy");
+    if (etapa !== "cierre" && (c.dias || 0) >= 3) cuerpo = "Sé que pasaron unos días desde tu solicitud. " + cuerpo;
     return `${saludo} ${cuerpo} ${BAJA}`;
   }
   const PATRONES_PROHIBIDOS = {
@@ -611,7 +666,33 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     "incluye enlaces": /(https?:\/\/|www\.)/,
   };
   const sinAcentos = (t) => String(t).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-  function validarMensaje(texto) {
+  const ESTRATEGIA_REQUERIDA = {
+    "primer_contacto|A": [/llam/],
+    "primer_contacto|B": [/llam/, /escrib/],
+    "primer_contacto|C": [/llamada/, /cuando/],
+    "retoma|A": [/llam/, /mensaje/],
+    "retoma|B": [/llam/, /escrib/],
+    "retoma|C": [/retom/],
+    "cierre|A": [/ultimo/],
+    "cierre|B": [/ultimo/],
+  };
+  const TRATO_DE_USTED = /\b(usted|ustedes|ayudarlo|ayudarla|apoyarlo|apoyarla|le escribimos|le podemos|le invito|necesita|desea|su solicitud)\b/;
+  function validarFidelidad(texto, c) {
+    const limpio = sinAcentos(texto);
+    const problemas = [];
+    if (!limpio.includes("solicitud")) problemas.push("no menciona la solicitud de información");
+    const etapa = etapaDe(c);
+    const letra = c.variante || "A";
+    for (const p of ESTRATEGIA_REQUERIDA[`${etapa}|${letra}`] || []) {
+      if (!p.test(limpio)) {
+        problemas.push(`no sigue la estrategia de la variante ${letra} (${etapa})`);
+        break;
+      }
+    }
+    if (TRATO_DE_USTED.test(limpio)) problemas.push("mezcla el trato de usted con el de tú");
+    return problemas;
+  }
+  function validarMensaje(texto, contexto) {
     const limpio = sinAcentos(texto);
     const problemas = [];
     if (!texto.trim()) problemas.push("está vacío");
@@ -619,10 +700,12 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     if (!limpio.includes("responde no")) problemas.push("no incluye la opción de baja");
     if (!limpio.includes(MARCA.toLowerCase())) problemas.push("no menciona la marca");
     for (const [nombre, patron] of Object.entries(PATRONES_PROHIBIDOS)) if (patron.test(limpio)) problemas.push(nombre);
+    if (contexto) problemas.push(...validarFidelidad(texto, contexto));
     return { valido: problemas.length === 0, problemas };
   }
 
-  function generarLista(leads, modelo, ahora, r) {
+  function generarLista(leads, modelo, ahora, r, opciones) {
+    const comparar = !opciones || opciones.compararVariantes !== false;
     const { elegibles, excluidos, slots } = calcularAsignacion(leads, modelo, ahora, r);
     const filas = elegibles.map((l, i) => {
       const asignado = l.horario !== null;
@@ -638,7 +721,11 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
         prob: l.prob,
         probPromedio: l.probPromedio,
         motivo: asignado ? explicar(modelo, l) : "Sin horario libre en los próximos días: se reprograma sin descartarlo.",
-        mensaje: asignado ? plantilla({ nunca: l.nunca, ultimo: l.intento >= r.maxIntentos, franja: franjaTexto(l.horario, ahora), asesor: l.asesor || "" }) : "",
+        etapa: asignado ? etapaDe({ nunca: l.nunca, ultimo: l.intento >= r.maxIntentos }) : "",
+        variante: asignado ? (comparar ? elegirVariante(l.lead_id, etapaDe({ nunca: l.nunca, ultimo: l.intento >= r.maxIntentos })) : "A") : "",
+        mensaje: asignado
+          ? plantilla({ nunca: l.nunca, ultimo: l.intento >= r.maxIntentos, franja: franjaTexto(l.horario, ahora), asesor: l.asesor || "", variante: comparar ? elegirVariante(l.lead_id, etapaDe({ nunca: l.nunca, ultimo: l.intento >= r.maxIntentos })) : "A", origenIa: String(l.canal).toLowerCase().includes("agente"), dias: Math.floor(l.dias) })
+          : "",
         asesor: l.asesor || "",
         telefono: l.telefono,
         objetivo: l.objetivo,
@@ -649,6 +736,102 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     const conteo = {};
     excluidos.forEach((e) => (conteo[e.motivo] = (conteo[e.motivo] || 0) + 1));
     return { filas, excluidos, conteoExcluidos: conteo, slots, elegibles };
+  }
+
+  // ------------------------------------------------------------------ respuestas
+  const ACCIONES_RESPUESTA = {
+    seguridad: ["Pasar de inmediato a un asesor", "", false, true, "Gracias por escribir. Si es una emergencia médica, llama al 911. Un asesor te contactará en cuanto pueda."],
+    baja: ["Registrar la baja y confirmar", "", true, false, "Entendido, no te volveremos a escribir. Gracias por tu tiempo."],
+    no_interesado: ["Marcar como no interesado y agradecer", "no_interesado", false, false, "Gracias por avisarnos. Si más adelante cambias de opinión, aquí estaremos."],
+    agenda: ["Pasar a seguimiento y agendar la hora", "en_seguimiento", false, false, ""],
+    interes: ["Pasar a seguimiento: la conversación sigue con el asesor", "en_seguimiento", false, false, ""],
+    posponer: ["Reprogramar el siguiente intento", "", false, false, ""],
+    pregunta: ["Pasar a un asesor: la herramienta no responde preguntas", "", false, true, ""],
+    ambigua: ["Pasar a un asesor para revisar", "", false, true, ""],
+  };
+  const PR = {
+    seguridad: /\b(emergencia|urgencia medica|me siento mal|dolor fuerte|ayuda urgente|no me siento bien|suicid\w*|mareo\w*|desmay\w*)\b/,
+    baja: /^(no|n o|stop|baja|cancelar|cancela)$|\b(no (me )?(escriban|escribas|escriba|contacten|contactes|manden|molesten)|dejen de|deja de|no quiero (mas )?(mensajes|que me escriban|que me contacten)|ya no (me )?(escriban|escribas|contacten)|quiten mi numero|borren mi numero|no mas mensajes)\b/,
+    noInteresado: /\b(no me interesa|ya no me interesa|no estoy interesad\w*|no gracias|ya no necesito|no lo necesito|no por ahora gracias)\b/,
+    posponer: /\b(ahorita no|ahora no|mas tarde|otro dia|despues|luego|en otro momento|ahora no puedo|no puedo ahora|estoy ocupad\w*)\b/,
+    negacionTiempo: /\b(no puedo|no podre|no voy a poder|no puedes|ahorita no|ahora no)\b/,
+    interes: /^(si|sii+|claro|ok|okay|dale|adelante|por favor|va|sale|perfecto|de acuerdo)\b|\b(me interesa|quiero (mas )?informacion|llamame|llamenme|marcame|marquenme|escribeme|mandame (la )?informacion|si quiero|me gustaria)\b/,
+    pregunta: /\?|\b(cuanto|cuanta|cuales|cual|que incluye|precio|costo|cuesta|como funciona|tienen|incluye|medicamento|tratamiento|receta|puedo|donde)\b/,
+    preguntaFuerte: /\?|\b(cuanto|cuanta|precio|costo|cuesta|incluye|medicamento|tratamiento|receta)\b/,
+    horaExplicita: /\b(?:a las|a la|como a las|tipo|a eso de las|despues de las)\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm|h|hrs|horas)?\b/,
+    horaSufijo: /\b(\d{1,2})(?::(\d{2}))?\s*(am|pm|h|hrs|horas)\b/,
+    horaDosPuntos: /\b(\d{1,2}):(\d{2})\b/,
+    franja: /\b(en la manana|por la manana|de manana|en la tarde|por la tarde|en la noche|por la noche)\b/,
+  };
+  const DIAS_RESP = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
+  const NOMBRES_FRANJA = { manana: "mañana", tarde: "tarde", noche: "noche" };
+
+  function limpioRespuesta(t) {
+    return String(t === null || t === undefined ? "" : t)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/\b([ap])\.\s?m\.?/g, "$1m")
+      .replace(/[^a-z0-9_:?¿!¡ ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+  function horaYFranja(limpio) {
+    const franja = PR.franja.exec(limpio);
+    let hora = -1;
+    let sufijo = null;
+    for (const [patron, conSufijo] of [[PR.horaExplicita, true], [PR.horaSufijo, true], [PR.horaDosPuntos, false]]) {
+      const m = patron.exec(limpio);
+      if (m) {
+        hora = parseInt(m[1], 10);
+        sufijo = conSufijo ? m[3] || null : null;
+        break;
+      }
+    }
+    if (!(hora >= 0 && hora <= 23)) hora = -1;
+    if (hora >= 0) {
+      if (sufijo === "pm" && hora < 12) hora += 12;
+      else if (sufijo === null && franja && /(tarde|noche)$/.test(franja[1]) && hora < 12) hora += 12;
+      else if (sufijo === null && !franja && hora >= 1 && hora <= 7) hora += 12;
+    }
+    const nombre = franja ? NOMBRES_FRANJA[franja[1].split(" ").pop()] : "";
+    return [hora, nombre];
+  }
+  function diaDeRespuesta(limpio) {
+    if (/\bpasado manana\b/.test(limpio)) return "pasado mañana";
+    if (/\bmanana\b/.test(limpio) && !/(en la|por la|de) manana/.test(limpio)) return "mañana";
+    if (/\bhoy\b/.test(limpio)) return "hoy";
+    for (const nombre of DIAS_RESP) if (new RegExp("\\b" + nombre + "\\b").test(limpio)) return { miercoles: "miércoles", sabado: "sábado" }[nombre] || nombre;
+    return "";
+  }
+  function armarRespuesta(intencion, confianza, motivo, dia = "", hora = -1, franja = "", humanoExtra = false) {
+    const [accion, estado, baja, humano0, respuesta0] = ACCIONES_RESPUESTA[intencion];
+    const humano = humano0 || humanoExtra;
+    let respuesta = respuesta0;
+    if (intencion === "agenda") {
+      const cuando = [dia, hora >= 0 ? `a las ${hora}:00` : "", franja && hora < 0 ? `por la ${franja}` : ""].filter(Boolean).join(" ");
+      respuesta = humano ? "" : cuando ? `Perfecto, quedamos ${cuando}. Gracias por contestar.` : "Perfecto, gracias por contestar.";
+    }
+    return { intencion, accion, estadoNuevo: estado, baja, requiereHumano: humano, respuestaSugerida: respuesta, confianza, dia, hora, franja, motivo };
+  }
+  function clasificarRespuesta(texto) {
+    const limpio = limpioRespuesta(texto);
+    if (!limpio) return armarRespuesta("ambigua", "baja", "Respuesta vacía");
+    if (PR.seguridad.test(limpio)) return armarRespuesta("seguridad", "alta", "Menciona malestar o una emergencia");
+    if (PR.baja.test(limpio)) return armarRespuesta("baja", "alta", "Pide no recibir más mensajes");
+    if (PR.noInteresado.test(limpio)) return armarRespuesta("no_interesado", "alta", "Dice que no le interesa");
+    const [hora, franja] = horaYFranja(limpio);
+    const dia = diaDeRespuesta(limpio);
+    const pregunta = PR.pregunta.test(limpio);
+    if (PR.negacionTiempo.test(limpio) && hora < 0) return armarRespuesta("posponer", "media", "Dice que no puede en este momento", dia, hora, franja);
+    if (hora >= 0 || dia || franja) {
+      const extra = PR.preguntaFuerte.test(limpio);
+      return armarRespuesta("agenda", hora >= 0 || dia ? "alta" : "media", "Propone un día u hora" + (extra ? " y además hace una pregunta" : ""), dia, hora, franja, extra);
+    }
+    if (PR.posponer.test(limpio)) return armarRespuesta("posponer", "media", "Pide hablar en otro momento");
+    if (PR.interes.test(limpio)) return armarRespuesta("interes", "alta", "Responde que sí o pide información", "", -1, "", pregunta);
+    if (pregunta) return armarRespuesta("pregunta", "media", "Hace una pregunta");
+    return armarRespuesta("ambigua", "baja", "No se entiende con claridad");
   }
 
   // ------------------------------------------------------------------ estadistica
@@ -950,7 +1133,8 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     DIAS, REGLAS, MOTIVOS, RESULTADOS, HORA, DIA,
     parseFecha, fmt, fmtDia, diaSemana, horaDe, claveTelefono,
     desdeFilas, enriquecer, motivoExclusion, horariosValidos, primerHorarioPermitido,
-    franjaHora, rangoEspera, calcularAsignacion, generarLista, plantilla, validarMensaje, franjaTexto,
+    franjaHora, rangoEspera, calcularAsignacion, generarLista, plantilla, validarMensaje, validarFidelidad, franjaTexto,
+    BIBLIOTECA, ESTRATEGIAS, etapaDe, elegirVariante, crc32, clasificarRespuesta, limpioRespuesta,
     cdfNormal, ppfNormal, tamanoMuestra, potenciaAnalitica, percentil, generador,
     prepararSimulacion, simular, resumenSimulacion,
     normalizarColumnas, validarFilas, fusionar, procesarIngesta, textoInforme,
@@ -1012,6 +1196,8 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     pagina: 0,
     seleccion: null,
     dimension: "franja_hora",
+    comparar: true,
+    chat: { lead: null, texto: "", resultado: null, hechos: [] },
   };
   try {
     (JSON.parse(localStorage.getItem("recontacto_bajas") || "[]") || []).forEach((c) => E.bajas.add(c));
@@ -1031,7 +1217,7 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     }
     $("#aviso-reglas").textContent = "";
     E.enriquecidos = M.enriquecer(E.actual, E.bajas);
-    E.lista = M.generarLista(E.enriquecidos, MODELO, E.ahora, E.reglas);
+    E.lista = M.generarLista(E.enriquecidos, MODELO, E.ahora, E.reglas, { compararVariantes: E.comparar });
     E.prep = null;
     E.pagina = 0;
     return true;
@@ -1065,6 +1251,8 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
   // ------------------------------------------------------------------ armado de la herramienta
   const SUBPESTANAS = [
     ["lista", "Lista del día"],
+    ["mensajes", "Mensajes"],
+    ["respuestas", "Respuestas"],
     ["evidencia", "Evidencia"],
     ["simulacion", "Simulación"],
     ["ab", "Prueba A/B"],
@@ -1152,7 +1340,7 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     refrescar();
   }
   function refrescar() {
-    ({ lista: vistaLista, evidencia: vistaEvidencia, simulacion: vistaSimulacion, ab: vistaAB, datos: vistaDatos, limites: vistaLimites })[E.sub]();
+    ({ lista: vistaLista, mensajes: vistaMensajes, respuestas: vistaRespuestas, evidencia: vistaEvidencia, simulacion: vistaSimulacion, ab: vistaAB, datos: vistaDatos, limites: vistaLimites })[E.sub]();
   }
 
   // ------------------------------------------------------------------ lista del dia
@@ -1207,7 +1395,7 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
     if (!sel) $("#l-detalle").innerHTML = `<h3>Detalle de la persona</h3>${ayuda("Elige una fila de la tabla para ver el motivo y el mensaje sugerido.")}`;
     else {
       const v = sel.mensaje ? M.validarMensaje(sel.mensaje) : null;
-      $("#l-detalle").innerHTML = `<h3>${esc(sel.lead_id)} · ${esc(sel.canal)}</h3><p class="nota">Intento ${sel.intento}${sel.nunca ? " · nunca contactada" : ""}${sel.asesor ? " · " + esc(sel.asesor) : ""}</p><div class="etiqueta-campo">Por qué</div><p>${esc(sel.motivo)}</p>${
+      $("#l-detalle").innerHTML = `<h3>${esc(sel.lead_id)} · ${esc(sel.canal)}</h3><p class="nota">Intento ${sel.intento}${sel.nunca ? " · nunca contactada" : ""}${sel.asesor ? " · " + esc(sel.asesor) : ""}${sel.variante ? ` · variante ${esc(sel.variante)}` : ""}</p><div class="etiqueta-campo">Por qué</div><p>${esc(sel.motivo)}</p>${
         sel.mensaje ? `<div class="etiqueta-campo">Mensaje sugerido</div><div class="msg" id="l-msg">${esc(sel.mensaje)}</div><div class="fila-accion"><button class="boton claro" id="l-copiar" type="button">Copiar mensaje</button><span class="insignia ${v.valido ? "ok" : "mal"}">${v.valido ? "Validado: sin salud, sin presión, con opción de baja" : "No pasa la validación: " + esc(v.problemas.join(", "))}</span></div>` : ""
       }`;
       const b = $("#l-copiar");
@@ -1544,6 +1732,162 @@ footer.pie p { color: var(--muted); font-size: 0.82rem; max-width: 90ch; margin:
       });
     }
     resumenDatos();
+  }
+
+  // ------------------------------------------------------------------ mensajes
+  const NOMBRES_ETAPA = { primer_contacto: "Primer contacto", retoma: "Retomar", cierre: "Cierre" };
+  const A_QUIEN = { primer_contacto: "A quien nunca recibió un contacto", retoma: "A quien no contestó el primer intento", cierre: "Al último intento permitido" };
+
+  function vistaMensajes() {
+    const cont = $("#sub-mensajes");
+    const L = E.lista;
+    const conteo = {};
+    L.filas.filter((f) => f.etapa).forEach((f) => {
+      conteo[f.etapa] = conteo[f.etapa] || {};
+      conteo[f.etapa][f.variante] = (conteo[f.etapa][f.variante] || 0) + 1;
+    });
+    const p0 = EVID.tasa_contesta;
+    const filas = [];
+    for (const etapa of Object.keys(M.BIBLIOTECA)) {
+      for (const letra of Object.keys(M.BIBLIOTECA[etapa]).sort()) {
+        const contexto = { nunca: etapa === "primer_contacto", ultimo: etapa === "cierre", variante: letra, franja: "hoy por la tarde", asesor: "Asesor B" };
+        const texto = M.plantilla(contexto);
+        const v = M.validarMensaje(texto, contexto);
+        filas.push(`<tr><td>${NOMBRES_ETAPA[etapa]}<div class="nota">${A_QUIEN[etapa]}</div></td><td><b>${letra}</b><div class="nota">${esc(M.ESTRATEGIAS[etapa][letra])}</div></td><td>${esc(texto)}</td><td class="num">${(conteo[etapa] || {})[letra] || 0}</td><td><span class="insignia ${v.valido ? "ok" : "mal"}">${v.valido ? "Válido" : "Revisar"}</span></td></tr>`);
+      }
+    }
+    cont.innerHTML = `
+      <div class="pila">
+        <div class="tarjeta">
+          <h3>Qué mensaje recibe cada persona</h3>
+          ${ayuda("La conversación se recupera en hasta tres pasos, y cada paso tiene varias redacciones con una estrategia distinta. A cada persona le toca siempre la misma variante (se asigna por su número de lead), para poder comparar después cuál recupera más conversaciones.")}
+          <label class="barra" style="margin:0 0 10px"><input type="checkbox" id="m-comparar" ${E.comparar ? "checked" : ""}> Comparar variantes (si se desmarca, todos reciben la variante A)</label>
+          <div class="scroll"><table><thead><tr><th>Situación</th><th>Variante</th><th>Mensaje de ejemplo</th><th>Personas hoy</th><th>Reglas</th></tr></thead><tbody>${filas.join("")}</tbody></table></div>
+        </div>
+        <div class="dos">
+          <div class="tarjeta">
+            <h3>Reglas que todo mensaje cumple</h3>
+            <ul>
+              <li>No menciona la condición de salud, no promete resultados, no mete urgencia ni enlaces.</li>
+              <li>Menciona la marca y trae la forma de pedir que no se le escriba más.</li>
+              <li>Hasta 480 caracteres, en tono de tú, y siempre habla de la solicitud de información.</li>
+              <li>Cambia según el canal (si llegó por un asistente de IA, lo dice) y si pasaron varios días desde la solicitud.</li>
+              <li>El tercer mensaje avisa que no se insistirá más.</li>
+            </ul>
+          </div>
+          <div class="tarjeta">
+            <h3>Cómo se sabrá cuál variante recupera más</h3>
+            ${ayuda("Hoy los datos no dicen qué mensaje se envió, así que esto es una hipótesis por probar, no un resultado.")}
+            <ul>
+              <li>Se guarda la variante enviada junto con el resultado (columna <code>variante</code> al subir datos).</li>
+              <li>Se compara el porcentaje que contesta de cada variante contra la A, con intervalos y una prueba de dos proporciones.</li>
+              <li>Para detectar una diferencia de 5 puntos entre dos variantes hacen falta unas <b>${num(M.tamanoMuestra(p0, 0.05))}</b> personas por variante; para 8 puntos, unas <b>${num(M.tamanoMuestra(p0, 0.08))}</b>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>`;
+    $("#m-comparar").addEventListener("change", (e) => { E.comparar = e.target.checked; recalcular(); vistaMensajes(); });
+  }
+
+  // ------------------------------------------------------------------ respuestas
+  const EJEMPLOS_RESPUESTA = ["NO", "Sí, llámame mañana a las 4", "¿Cuánto cuesta?", "Ahorita no puedo", "Me siento mal desde ayer", "No gracias, ya no me interesa", "Mejor el lunes por la mañana", "Hola"];
+  const NOMBRES_INTENCION = { baja: "Pide no recibir más mensajes", no_interesado: "No le interesa", interes: "Quiere seguir", agenda: "Propone un día u hora", posponer: "Pide otro momento", pregunta: "Hace una pregunta", seguridad: "Menciona un malestar o emergencia", ambigua: "No se entiende" };
+
+  function aplicarRespuesta(lead, c) {
+    const hechos = [];
+    if (c.baja) {
+      const clave = M.claveTelefono(lead.telefono);
+      if (E.bajas.has(clave)) hechos.push("el teléfono ya estaba en la lista de bajas");
+      else { E.bajas.add(clave); GUARDA_BAJAS(); hechos.push("baja registrada: no se le volverá a escribir"); }
+    }
+    if (c.estadoNuevo) {
+      E.historial.push({ datos: E.actual, hora: new Date().toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }) });
+      E.actual = E.actual.map((x) => (x.lead_id === lead.lead_id ? { ...x, resultado: c.estadoNuevo } : x));
+      hechos.push(`estado cambiado a ${c.estadoNuevo}: sale de la lista de recontacto`);
+    }
+    if (!hechos.length) hechos.push(c.intencion === "posponer" ? "se reprograma el siguiente intento (no cambia el estado)" : "sin cambios en los datos: la conversación pasa a un asesor");
+    recalcular();
+    return hechos;
+  }
+
+  function vistaRespuestas() {
+    const cont = $("#sub-respuestas");
+    const L = E.lista;
+    const candidatos = L.filas.filter((f) => f.mensaje).slice(0, 80);
+    if (!E.chat.lead || !L.filas.some((f) => f.lead_id === E.chat.lead)) E.chat = { lead: candidatos.length ? candidatos[0].lead_id : null, texto: "", resultado: null, hechos: [] };
+    if (!cont.dataset.listo) {
+      cont.dataset.listo = "1";
+      cont.innerHTML = `
+        <div class="pila">
+          <div class="tarjeta">
+            <h3>Probar una conversación</h3>
+            ${ayuda("Elige a una persona de la lista, escribe lo que contesta y mira qué entiende la herramienta y qué haría. Es un clasificador por reglas, sin modelo: cada decisión se puede leer. Ante la duda, pasa la conversación a un asesor.")}
+            <div class="formulario">
+              <div><label for="c-lead">Persona de la lista</label><select id="c-lead" class="entrada"></select></div>
+              <div style="grid-column: span 2"><label for="c-texto">Lo que contesta la persona</label><input id="c-texto" class="entrada" type="text" placeholder="Escribe una respuesta, por ejemplo: sí, llámame mañana a las 4"></div>
+            </div>
+            <div class="fila-accion" id="c-ejemplos"></div>
+          </div>
+          <div class="dos">
+            <div class="tarjeta"><h3>Conversación</h3><div id="c-chat" class="chat"></div></div>
+            <div class="tarjeta"><h3>Qué entendió y qué hace</h3><div id="c-resultado"></div></div>
+          </div>
+          <p class="nota">Lo que no hace: enviar mensajes ni leer respuestas reales de WhatsApp (no hay conexión con ningún canal). Esto muestra la lógica que se conectaría. Las respuestas sugeridas las envía el asesor; solo la confirmación de una baja y el agradecimiento son textos fijos.</p>
+        </div>`;
+      $("#c-ejemplos").innerHTML = EJEMPLOS_RESPUESTA.map((t) => `<button class="boton claro" type="button" data-ej="${esc(t)}">${esc(t)}</button>`).join("");
+      $$("#c-ejemplos button").forEach((b) => b.addEventListener("click", () => { $("#c-texto").value = b.dataset.ej; interpretar(); }));
+      $("#c-texto").addEventListener("keydown", (e) => { if (e.key === "Enter") interpretar(); });
+      $("#c-lead").addEventListener("change", () => { E.chat.lead = $("#c-lead").value; E.chat.resultado = null; E.chat.hechos = []; pintarChat(); });
+      $("#c-texto").addEventListener("input", () => { E.chat.texto = $("#c-texto").value; });
+    }
+    $("#c-lead").innerHTML = candidatos.map((f) => `<option value="${esc(f.lead_id)}" ${f.lead_id === E.chat.lead ? "selected" : ""}>${esc(f.lead_id)} · ${esc(f.canal)} · ${f.nunca ? "nunca contactada" : "intento " + f.intento}</option>`).join("");
+    pintarChat();
+  }
+
+  function interpretar() {
+    const texto = $("#c-texto").value.trim();
+    if (!texto) return;
+    E.chat.texto = texto;
+    E.chat.resultado = M.clasificarRespuesta(texto);
+    E.chat.hechos = [];
+    pintarChat();
+  }
+
+  function pintarChat() {
+    const fila = E.lista.filas.find((f) => f.lead_id === E.chat.lead);
+    const c = E.chat.resultado;
+    const burbujas = [];
+    if (fila) burbujas.push(`<div class="burbuja asesor"><div class="quien">${esc(fila.asesor || "Asesor")} · variante ${esc(fila.variante || "A")}</div>${esc(fila.mensaje)}</div>`);
+    else burbujas.push('<p class="ayuda">No hay personas con mensaje en la lista con estas reglas.</p>');
+    if (c) {
+      burbujas.push(`<div class="burbuja persona"><div class="quien">La persona</div>${esc(E.chat.texto)}</div>`);
+      if (c.respuestaSugerida) burbujas.push(`<div class="burbuja asesor sugerida"><div class="quien">Respuesta sugerida (la envía el asesor)</div>${esc(c.respuestaSugerida)}</div>`);
+      else if (c.requiereHumano) burbujas.push('<div class="burbuja sistema">Pasa a un asesor: la herramienta no responde sola.</div>');
+    }
+    $("#c-chat").innerHTML = burbujas.join("");
+    if (!c) {
+      $("#c-resultado").innerHTML = '<p class="ayuda">Escribe una respuesta o elige un ejemplo.</p>';
+      return;
+    }
+    const clase = c.intencion === "baja" || c.intencion === "seguridad" ? "mal" : c.intencion === "ambigua" || c.intencion === "pregunta" ? "" : "ok";
+    const propuesta = [c.dia, c.hora >= 0 ? `a las ${c.hora}:00` : "", c.franja].filter(Boolean).join(" ");
+    $("#c-resultado").innerHTML = `
+      <p><span class="insignia ${clase}">${esc(NOMBRES_INTENCION[c.intencion])}</span> <span class="nota">confianza ${esc(c.confianza)}</span></p>
+      <div class="etiqueta-campo">Por qué</div><p>${esc(c.motivo)}</p>
+      <div class="etiqueta-campo">Qué hace la herramienta</div><p>${esc(c.accion)}</p>
+      ${propuesta ? `<div class="etiqueta-campo">Lo que propone la persona</div><p>${esc(propuesta)}</p>` : ""}
+      <div class="etiqueta-campo">¿Lo atiende un asesor?</div><p>${c.requiereHumano ? "Sí" : "No"}</p>
+      <div class="fila-accion"><button class="boton" id="c-aplicar" type="button">Aplicar a los datos</button></div>
+      <div id="c-hechos">${E.chat.hechos.map((h) => `<p class="exito">${esc(h)}</p>`).join("")}</div>`;
+    $("#c-aplicar").addEventListener("click", () => {
+      const lead = E.actual.find((l) => l.lead_id === E.chat.lead);
+      if (!lead) return;
+      E.chat.hechos = aplicarRespuesta(lead, c);
+      $("#c-hechos").innerHTML = E.chat.hechos.map((h) => `<p class="exito">${esc(h)}</p>`).join("");
+      $("#c-lead").innerHTML = E.lista.filas.filter((f) => f.mensaje).slice(0, 80).map((f) => `<option value="${esc(f.lead_id)}" ${f.lead_id === E.chat.lead ? "selected" : ""}>${esc(f.lead_id)} · ${esc(f.canal)} · ${f.nunca ? "nunca contactada" : "intento " + f.intento}</option>`).join("");
+      const sigue = E.lista.filas.some((f) => f.lead_id === E.chat.lead);
+      $("#c-hechos").insertAdjacentHTML("beforeend", `<p class="nota">${sigue ? "Esta persona sigue en la lista." : "Esta persona ya no aparece en la lista de recontacto."}</p>`);
+    });
   }
 
   // ------------------------------------------------------------------ limites

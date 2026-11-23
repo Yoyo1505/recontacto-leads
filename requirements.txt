@@ -1,0 +1,15 @@
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+dash
+plotly
+pillow
+websocket-client
+openpyxl
+xlrd
+pyarrow
+sqlalchemy
+requests
+pytest

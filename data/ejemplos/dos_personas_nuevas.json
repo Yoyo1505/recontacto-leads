@@ -1,0 +1,32 @@
+[
+  {
+    "lead_id":"L90001",
+    "fecha_registro":"2026-11-08 21:40",
+    "canal":"Agente IA",
+    "anuncio":"",
+    "estado":"CDMX",
+    "edad":"38",
+    "objetivo":"control de peso",
+    "plan_de_interes":"1599",
+    "telefono":"55-02000001",
+    "asesor":"",
+    "primer_contacto":"",
+    "resultado":"sin_contactar",
+    "monto_venta":""
+  },
+  {
+    "lead_id":"L90002",
+    "fecha_registro":"2026-11-07 15:00",
+    "canal":"Meta",
+    "anuncio":"Video testimonio 01",
+    "estado":"Jalisco",
+    "edad":"45",
+    "objetivo":"diabetes tipo 2",
+    "plan_de_interes":"1299",
+    "telefono":"55-02000002",
+    "asesor":"Asesor B",
+    "primer_contacto":"2026-11-08 10:20",
+    "resultado":"no_contesta",
+    "monto_venta":""
+  }
+]

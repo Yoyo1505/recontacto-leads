@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+outputs/
+data/leads_actual.csv
+data/bajas.csv
+data/historial/
+web/demo.mp4
+*.env
+.env

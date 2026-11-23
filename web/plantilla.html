@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrega recontacto de leads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+
+<div class="aviso-superior"><b>Proyecto de demostración</b> con datos ficticios · no es un sitio oficial de Clivi</div>
+
+<header class="superior">
+  <div class="contenedor">
+    <img class="logo" src="{{LOGO}}" alt="Clivi">
+    <nav class="piezas" aria-label="Piezas de la entrega">
+      <a href="#herramienta">Herramienta</a>
+      <a href="#memo">Memo</a>
+      <a href="#bitacora">Bitácora</a>
+      <a href="#video">Video y prueba</a>
+    </nav>
+    <a class="pildora cta-header" href="#video">Ver el video →</a>
+  </div>
+</header>
+
+<main class="contenedor">
+
+  <section id="vista-herramienta" class="vista"></section>
+
+  <section id="vista-memo" class="vista" hidden>
+    <div class="encabezado-vista">
+      <span class="pastilla">Memo de una página</span>
+      <div><h2>Qué hice, qué encontré y <span class="acento">qué no funciona todavía</span></h2><p class="sub">Una página sobre el proyecto, sin adornos.</p></div>
+    </div>
+    <div class="lectura">
+      <article class="hoja">
+        <h2>Recontacto de leads</h2>
+        <p class="nota">Misión C · datos ficticios, del 28 de septiembre al 8 de noviembre de 2026</p>
+
+        <h3>Qué hice</h3>
+        <p>Una herramienta que cada mañana dice a quién volver a buscar, cuándo y con qué mensaje, entre las personas que pidieron información y no contestaron. Limpia los datos (fechas en dos formatos, 70 teléfonos repetidos, edades imposibles), aplica reglas de trato, estima con una regresión logística el mejor horario de cada persona, reparte el trabajo con un límite de contactos por hora y propone uno de tres mensajes según el intento. Quien pidió no recibir mensajes queda fuera para siempre. Incluye una simulación, una calculadora de prueba A/B y la carga de datos desde archivos. Existe en Python (168 pruebas) y en esta versión web, que abre sin instalar nada y da las mismas 346 recomendaciones que la de Python.</p>
+
+        <h3>Qué encontré</h3>
+        <ul>
+          <li>El 40.3% de los 1,694 leads contactados no contestó.</li>
+          <li>El canal marca la diferencia: no contesta el 24% de los referidos, el 27% de Google y el 49% de TikTok. El perfil de la persona no aporta.</li>
+          <li>Contactar en los primeros 30 minutos deja sin respuesta al 29%; después de 12 a 24 horas, al 47%.</li>
+          <li>El modelo tiene señal real pero modesta: AUC 0.60 (intervalo 0.55 a 0.65).</li>
+          <li>Simulando un día de lista (346 personas), el horario del modelo hace que contesten 5.7 más, con intervalo de −20 a +31: no se distingue del azar.</li>
+          <li>Comprobar una mejora de 3 puntos pide unas 4,100 personas por grupo, cerca de 200 días con el flujo actual. Una de 8 puntos, unas 560 por grupo y 27 días.</li>
+          <li>Ningún asesor sale de los límites de control: sus diferencias caben en el azar.</li>
+        </ul>
+
+        <h3>Qué no funciona todavía</h3>
+        <ul>
+          <li>No envía mensajes ni lee respuestas: los envía el asesor y la baja se registra a mano.</li>
+          <li>Los mensajes son tres plantillas con criterio, no probadas con respuestas reales. No sé cuánto recuperan.</li>
+          <li>No se puede separar el efecto del horario del de la rapidez del contacto, y solo hay un intento por persona.</li>
+          <li>El modelo no se reentrena en el navegador; la versión en Python sí.</li>
+          <li>No probé la nube, PostgreSQL, MySQL ni el modelo de lenguaje con servicios reales. La prueba con dos personas está pendiente.</li>
+        </ul>
+
+        <h3>Siguiente paso</h3>
+        <p>Probar la herramienta con dos personas, escribir mensajes por situación con variantes para comparar, y hacer que las respuestas actualicen solas el estado de cada persona. Después, la prueba A/B para medir cuánto recupera cada mensaje.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="vista-bitacora" class="vista" hidden>
+    <div class="encabezado-vista">
+      <span class="pastilla">Bitácora</span>
+      <div><h2>Una entrada por día, con el <span class="acento">uso de IA</span></h2><p class="sub">Solo hay trabajo registrado del 23 de noviembre.</p></div>
+    </div>
+    <div class="lectura">
+
+      <article class="entrada-dia">
+        <div class="fecha">Lunes 23 de noviembre de 2026</div>
+        <h4>Qué hice</h4>
+        <ul>
+          <li><b>Datos:</b> unifiqué dos formatos de fecha, marqué 70 teléfonos repetidos, invalidé 14 edades imposibles y propagué por teléfono si ya compró, rechazó o está en seguimiento.</li>
+          <li><b>Modelo:</b> regresión logística contra un árbol potenciado, evaluados hacia adelante en el tiempo. AUC 0.603 contra 0.599. Me quedé con la logística porque cada recomendación se puede explicar.</li>
+          <li><b>Reglas de trato y asignación:</b> horario de 9 a 20 horas, máximo 3 intentos, 24 horas entre intentos, ventana de 21 días, exclusión de clientes, rechazos, personas en conversación y bajas. Reparto con límite de contactos por hora.</li>
+          <li><b>Mensajes:</b> tres plantillas (primer contacto, retomar, cierre) y un validador que rechaza menciones de salud, promesas, urgencia y mensajes sin opción de baja.</li>
+          <li><b>Simulación y control estadístico:</b> Monte Carlo con 100 remuestras del modelo, parámetro alpha para lo que no se puede separar, calculadora de prueba A/B, carta p diaria y gráfico de embudo por asesor.</li>
+          <li><b>Datos nuevos:</b> lectura de CSV, JSON, Excel, Parquet, SQLite, bases SQL, web y nube, con informe previo, versiones y lista de bajas, más archivos .bat para todo.</li>
+          <li><b>Aplicación en Dash</b> con siete secciones, un GIF y un video del recorrido.</li>
+          <li><b>Esta versión web:</b> reescribí la lógica en JavaScript para que abra sin instalar nada, y la comparé con la de Python.</li>
+        </ul>
+        <h4>Qué falló y cómo lo corregí</h4>
+        <ul>
+          <li>La primera lista asignaba a 291 personas al mismo martes a las 13:00. Agregué un límite de contactos por hora y un reparto por prioridad.</li>
+          <li>Plotly leyó categorías como "9-10" como fechas. Fijé los ejes como categóricos.</li>
+          <li>Un aviso de error aparecía sin que nadie hiciera clic en la sección de datos. Protegí los callbacks contra el disparo inicial.</li>
+          <li>Al guardar, pandas no admitía cadenas vacías en columnas enteras con nulos. Convertí los números a texto al escribir.</li>
+          <li>Mensajes y nombres de días sin acentos. Los corregí en un solo lugar.</li>
+          <li>La versión web se comparó con Python lead por lead: mismas 346 recomendaciones, mismo orden, horarios, mensajes y exclusiones, con una diferencia de probabilidad de 1e-16.</li>
+        </ul>
+        <h4>Decisiones</h4>
+        <ul>
+          <li>La probabilidad de contestar solo elige el horario: no descarta a nadie. Quien no cabe un día pasa a una cola.</li>
+          <li>Plantillas por defecto y modelo de lenguaje opcional, que solo recibe intento, franja del día y asesor.</li>
+          <li>Horario y rapidez del contacto están confundidos en los datos, así que la simulación recorre un supuesto (alpha) en lugar de afirmar un efecto.</li>
+        </ul>
+        <h4>Uso de IA</h4>
+        <p>Trabajé con Claude Code (modelos Haiku 5.5 y Sonnet 5.5) como asistente de programación. Le pedí el análisis de los dos archivos, el código, las pruebas, la documentación, la aplicación en Dash, la ingesta de datos, los .bat, el GIF y el video, y esta versión web. Yo elegí la misión, el objetivo de postularme a AI engineer, las prioridades (Dash en lugar de Streamlit, una página que abra sin instalar, reglas de trato solo documentadas, archivos .bat, la identidad visual de la empresa) y revisé los resultados. Lo verifiqué ejecutándolo: 168 pruebas en Python, la comparación entre JavaScript y Python, capturas de cada pantalla y la lectura de los errores del servidor. La IA se equivocó en lo que listé arriba; lo detectamos al correr y mirar los resultados. Lo que no está probado con servicios reales (nube, PostgreSQL, MySQL, modelo de lenguaje) lo dejo dicho en el memo.</p>
+      </article>
+
+      <article class="entrada-dia">
+        <div class="fecha">Martes 24 de noviembre de 2026 (hasta la entrega)</div>
+        <div class="pendiente">Pendiente: hacer la prueba con dos personas, registrar lo que cambié después de verlas usar la herramienta y completar esta entrada.</div>
+      </article>
+    </div>
+  </section>
+
+  <section id="vista-video" class="vista" hidden>
+    <div class="encabezado-vista">
+      <span class="pastilla">Video y prueba</span>
+      <div><h2>Tres minutos de video y lo que <span class="acento">cambié</span> después de ver a dos personas</h2><p class="sub">El video recorre la herramienta; la prueba se completa cuando dos personas la usen.</p></div>
+    </div>
+    <div class="lectura">
+      <div class="tarjeta">
+        <h3>Video demo</h3>
+        <video controls preload="metadata" src="demo.mp4">Tu navegador no puede reproducir este video.</video>
+        <p class="nota" style="margin-top:10px">{{CAPITULOS}}</p>
+        <p class="nota">Las conversaciones del video son un ejemplo ilustrativo: las respuestas de la persona son inventadas y la herramienta todavía no lee respuestas.</p>
+      </div>
+
+      <div class="tarjeta">
+        <h3>Prueba con dos personas</h3>
+        <div class="pendiente">Todavía no se hace. Esta sección se completa después de ver a dos personas usar la herramienta; no hay resultados inventados.</div>
+        <h4 style="margin:18px 0 6px;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel)">Cómo se hará</h4>
+        <ul>
+          <li>Dos personas distintas abren esta misma página, sin instalar nada y sin explicación previa.</li>
+          <li>Les pido hacer cinco tareas, en voz alta, mientras observo y no ayudo:</li>
+        </ul>
+        <ol style="margin:8px 0 0;padding-left:1.4rem">
+          <li>Encontrar a quién hay que contactar primero y decir por qué.</li>
+          <li>Cambiar una regla (máximo de 2 intentos) y decir qué cambió en la lista.</li>
+          <li>Agregar una persona nueva y decir qué haría la herramienta con ella.</li>
+          <li>Registrar una baja y comprobar que esa persona ya no aparece.</li>
+          <li>Explicar con sus palabras qué hace la herramienta y qué no.</li>
+        </ol>
+        <h4 style="margin:18px 0 6px;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel)">Qué se registra</h4>
+        <div class="scroll"><table class="tabla-prueba">
+          <thead><tr><th></th><th>Persona 1</th><th>Persona 2</th></tr></thead>
+          <tbody>
+            <tr><td>Perfil</td><td>Pendiente</td><td>Pendiente</td></tr>
+            <tr><td>Tareas que logró sin ayuda (de 5)</td><td>Pendiente</td><td>Pendiente</td></tr>
+            <tr><td>Tiempo hasta encontrar a quién contactar primero</td><td>Pendiente</td><td>Pendiente</td></tr>
+            <tr><td>Dónde dudó o se equivocó</td><td>Pendiente</td><td>Pendiente</td></tr>
+            <tr><td>Qué entendió de lo que hace la herramienta (sus palabras)</td><td>Pendiente</td><td>Pendiente</td></tr>
+          </tbody>
+        </table></div>
+        <h4 style="margin:18px 0 6px;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--steel)">Lo que cambié después de verlas</h4>
+        <div class="pendiente">Pendiente: se llena después de la prueba, con el cambio concreto, por qué lo hice y cómo lo comprobé.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p><b>Proyecto de demostración</b> hecho como parte de un proceso de selección. Los datos son ficticios.</p>
+    <p>El nombre, el logo y los colores de Clivi pertenecen a Clivi y se usan aquí solo para esta presentación; esta página no es un sitio oficial de la empresa ni la representa.</p>
+  </div>
+</footer>
+
+<script type="application/json" id="datos-json">{{DATOS_JSON}}</script>
+<script type="application/json" id="modelo-json">{{MODELO_JSON}}</script>
+<script type="application/json" id="evidencia-json">{{EVID_JSON}}</script>
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+{{MOTOR_JS}}
+</script>
+<script>
+{{APP_JS}}
+</script>
+</body>
+</html>

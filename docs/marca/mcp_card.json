@@ -1,0 +1,19 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+  "name": "mx.com.clivi/clivi-account",
+  "version": "0.1.0",
+  "description": "Learn if Clivi fits, request an account, and check plan, appointments, shipments and weight.",
+  "title": "Clivi",
+  "websiteUrl": "https://www.clivi.com.mx/agents",
+  "icons": [
+    { "src": "https://www.clivi.com.mx/favicon-v2-192.png", "mimeType": "image/png", "sizes": ["192x192"] },
+    { "src": "https://www.clivi.com.mx/favicon-v2-512.png", "mimeType": "image/png", "sizes": ["512x512"] }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://agents.clivi.com.mx/mcp",
+      "supportedProtocolVersions": ["2025-06-18", "2025-11-25"]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "specVersion": "1.0",
+  "entries": [
+    {
+      "identifier": "urn:air:clivi.com.mx:mcp:clivi-account",
+      "type": "application/mcp-server-card+json",
+      "url": "https://www.clivi.com.mx/.well-known/mcp.json"
+    },
+    {
+      "identifier": "urn:air:clivi.com.mx:mcp:clivi-open",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+        "name": "mx.com.clivi/clivi-open",
+        "version": "0.1.0",
+        "description": "Public Clivi tools with no sign-in: learn if Clivi fits and request an account.",
+        "title": "Clivi (no sign-in)",
+        "websiteUrl": "https://www.clivi.com.mx/agents",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://agents.clivi.com.mx/mcp/open",
+            "supportedProtocolVersions": ["2025-06-18", "2025-11-25"]
+          }
+        ]
+      }
+    }
+  ]
+}
