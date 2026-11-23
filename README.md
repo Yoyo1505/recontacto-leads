@@ -20,6 +20,8 @@ La misión: recuperar esas conversaciones. A quién volver a buscar, cuándo y c
 
 Además de la lista, la herramienta decide **qué mensaje** recibe cada persona según su situación (tres pasos, variantes A/B/C con estrategias distintas, todas validadas), **lee la respuesta** (baja, interés, cita, pregunta, malestar) y la lleva al asesor o a una acción, y mide qué variante recupera más conversaciones. Ver las pestañas Mensajes y Respuestas de la versión web.
 
+Para producción: [`docs/ANALISIS_PENDIENTES.md`](docs/ANALISIS_PENDIENTES.md) (qué falta), [`docs/OPERACION.md`](docs/OPERACION.md), [`docs/SEGURIDAD_Y_PRIVACIDAD.md`](docs/SEGURIDAD_Y_PRIVACIDAD.md), [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) y [`CHANGELOG.md`](CHANGELOG.md).
+
 Para la visibilidad en IA hay un plan de 90 días ([`docs/plan_visibilidad_ia.md`](docs/plan_visibilidad_ia.md)) y un panel para medirla (`python -m recontacto.visibilidad`).
 
 Los datos de `data/` son ficticios (1,811 leads del 28-sep-2026 al 08-nov-2026). La documentación completa está en [`docs/README.md`](docs/README.md).

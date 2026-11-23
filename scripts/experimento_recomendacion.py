@@ -134,7 +134,7 @@ def wilson(k, n, z=1.96):
     p = k / n
     centro = (p + z * z / (2 * n)) / (1 + z * z / n)
     ancho = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / (1 + z * z / n)
-    return centro - ancho, centro + ancho
+    return max(0.0, centro - ancho), min(1.0, centro + ancho)
 
 
 def main():
@@ -196,7 +196,7 @@ def main():
         "## Límites",
         "",
         "- Un solo modelo pequeño y local, no ChatGPT, Perplexity ni Google, con fuentes simuladas: muestra el mecanismo, no la visibilidad real de Clivi.",
-        "- Con 20 preguntas la potencia es baja: una diferencia pequeña no se distinguiría del azar.",
+        f"- Con {n} preguntas la potencia es baja: una diferencia pequeña no se distinguiría del azar.",
         "- El contenido reorganizado no agrega hechos; solo reordena y reescribe lo que Clivi ya publica. Los competidores son descripciones genéricas, no marcas reales.",
         "- Las respuestas completas están en `experimento_recomendacion.json` para revisarlas.",
     ]

@@ -1,0 +1,26 @@
+name: Pruebas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: pip install -r requirements.txt
+      - name: Archivos web ensamblados al dia
+        run: python scripts/ensamblar_web.py --revisar
+      - name: JavaScript contra Python
+        run: node web/prueba_motor.js
+      - name: Pruebas de Python
+        run: python -m pytest -q

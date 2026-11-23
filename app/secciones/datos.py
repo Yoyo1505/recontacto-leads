@@ -13,7 +13,7 @@ Como fluye una persona nueva
     -> se le asigna horario y mensaje, o se explica por que hoy no se le escribe.
 
 Donde cambiar cosas
-    - Reglas de validacion y formatos aceptados: `recontacto/ingesta.py`.
+    - Reglas de validacion y formatos aceptados: `recontacto/ingesta/validacion.py` y `esquema.py`.
     - Canales y opciones del formulario: constantes `CANALES`, `OBJETIVOS`, `PLANES`.
     - Tamano maximo de archivo: `LIMITE_MB`.
     - Para varias personas usando la app a la vez habria que guardar el estado pendiente por

@@ -207,7 +207,7 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
         <p class="nota">Misión C · datos ficticios, del 28 de septiembre al 8 de noviembre de 2026</p>
 
         <h3>Qué hice</h3>
-        <p>Una herramienta que cada mañana dice a quién volver a buscar, cuándo y con qué mensaje, entre las personas que pidieron información y no contestaron. Limpia los datos (fechas en dos formatos, 70 teléfonos repetidos, edades imposibles), aplica reglas de trato, estima con una regresión logística el mejor horario de cada persona, reparte el trabajo con un límite de contactos por hora y propone un mensaje según el intento y la situación (tres pasos con variantes A/B/C que se pueden comparar). Lee las respuestas de la persona con reglas (baja, interés, cita, pregunta, malestar) y pasa a un asesor lo que no entiende. Quien pidió no recibir mensajes queda fuera para siempre. Incluye una simulación, una calculadora de prueba A/B y la carga de datos desde archivos. Existe en Python (221 pruebas) y en esta versión web, que abre sin instalar nada y da las mismas 346 recomendaciones que la de Python.</p>
+        <p>Una herramienta que cada mañana dice a quién volver a buscar, cuándo y con qué mensaje, entre las personas que pidieron información y no contestaron. Limpia los datos (fechas en dos formatos, 70 teléfonos repetidos, edades imposibles), aplica reglas de trato, estima con una regresión logística el mejor horario de cada persona, reparte el trabajo con un límite de contactos por hora y propone un mensaje según el intento y la situación (tres pasos con variantes A/B/C que se pueden comparar). Lee las respuestas de la persona con reglas (baja, interés, cita, pregunta, malestar) y pasa a un asesor lo que no entiende. Quien pidió no recibir mensajes queda fuera para siempre. Incluye una simulación, una calculadora de prueba A/B y la carga de datos desde archivos. Existe en Python (229 pruebas) y en esta versión web, que abre sin instalar nada y da las mismas 346 recomendaciones que la de Python.</p>
 
         <h3>Qué encontré</h3>
         <ul>
@@ -277,7 +277,7 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
           <li>Horario y rapidez del contacto están confundidos en los datos, así que la simulación recorre un supuesto (alpha) en lugar de afirmar un efecto.</li>
         </ul>
         <h4>Uso de IA</h4>
-        <p>Trabajé con Claude Code (modelos Haiku 5.5 y Sonnet 5.5) como asistente de programación. Le pedí el análisis de los dos archivos, el código, las pruebas, la documentación, la aplicación en Dash, la ingesta de datos, los .bat, el GIF y el video, y esta versión web. Yo elegí la misión, el objetivo de postularme a AI engineer, las prioridades (Dash en lugar de Streamlit, una página que abra sin instalar, reglas de trato solo documentadas, archivos .bat, la identidad visual de la empresa) y revisé los resultados. Lo verifiqué ejecutándolo: 221 pruebas en Python, la comparación entre JavaScript y Python, capturas de cada pantalla y la lectura de los errores del servidor. La IA se equivocó en lo que listé arriba; lo detectamos al correr y mirar los resultados. Lo que no está probado con servicios reales (nube, PostgreSQL, MySQL, modelo de lenguaje) lo dejo dicho en el memo.</p>
+        <p>Trabajé con Claude Code (modelos Haiku 5.5 y Sonnet 5.5) como asistente de programación. Le pedí el análisis de los dos archivos, el código, las pruebas, la documentación, la aplicación en Dash, la ingesta de datos, los .bat, el GIF y el video, y esta versión web. Yo elegí la misión, el objetivo de postularme a AI engineer, las prioridades (Dash en lugar de Streamlit, una página que abra sin instalar, reglas de trato solo documentadas, archivos .bat, la identidad visual de la empresa) y revisé los resultados. Lo verifiqué ejecutándolo: 229 pruebas en Python, la comparación entre JavaScript y Python, capturas de cada pantalla y la lectura de los errores del servidor. La IA se equivocó en lo que listé arriba; lo detectamos al correr y mirar los resultados. Lo que no está probado con servicios reales (nube, PostgreSQL, MySQL, modelo de lenguaje) lo dejo dicho en el memo.</p>
       </article>
 
       <article class="entrada-dia">
@@ -349,6 +349,9 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 /*
+ * Edicion: este archivo y los demas de web/fuente/motor/ son las secciones; web/motor.js se genera con
+ * python scripts/ensamblar_web.py y no se edita a mano.
+ *
  * Motor de recontacto en JavaScript: la misma logica que la version en Python, para que la herramienta
  * abra en el navegador sin instalar nada.
  *
@@ -1150,6 +1153,9 @@ code { background: var(--fondo-suave); padding: 1px 6px; border-radius: 6px; fon
 </script>
 <script>
 /*
+ * Edicion: este archivo y los demas de web/fuente/app/ son las secciones; web/app.js se genera con
+ * python scripts/ensamblar_web.py y no se edita a mano.
+ *
  * Interfaz de la herramienta (pieza 1 de la entrega). Usa el motor de motor.js y las graficas de Plotly.
  *
  * Estructura

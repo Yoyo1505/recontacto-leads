@@ -158,6 +158,9 @@ def _valores(ctx):
         "form-contacto.value": "",
         "datos-aplicar.n_clicks": 0,
         "baja-boton.n_clicks": 1,
+        "resp-boton.n_clicks": 1,
+        "resp-texto.value": "Sí, llámame mañana a las 4",
+        "resp-ejemplo.value": "NO",
         "baja-telefono.value": "",
         "version-restaurar.n_clicks": 1,
         "version-original.n_clicks": None,
@@ -290,3 +293,19 @@ def test_formulario_de_una_persona(entorno):
     valores["form-telefono.value"] = "12"
     r = _llamar(app2, ["datos-informe.children", "datos-aplicar.disabled", "datos-mensaje-aplicar.children"], valores, "form-revisar.n_clicks")
     assert "telefono no valido" in json.dumps(r["datos-informe"]["children"]) and r["datos-aplicar"]["disabled"] is True
+
+
+def test_la_seccion_de_mensajes_muestra_las_ocho_plantillas_validas(ctx):
+    from secciones import mensajes as seccion
+
+    filas = seccion.filas_biblioteca()
+    assert len(filas) == 8 and all(f["valido"] for f in filas)
+
+
+def test_la_seccion_de_respuestas_interpreta_cita_baja_y_malestar():
+    from secciones import respuestas as seccion
+
+    assert "Propone un día u hora" in str(seccion.resultado("Sí, llámame mañana a las 4"))
+    assert "Pide no recibir" in str(seccion.resultado("NO"))
+    assert "911" in str(seccion.resultado("Me siento mal desde ayer"))
+    assert "Escribe una respuesta" in str(seccion.resultado("  "))

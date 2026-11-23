@@ -1,4 +1,7 @@
 /*
+ * Edicion: este archivo y los demas de web/fuente/motor/ son las secciones; web/motor.js se genera con
+ * python scripts/ensamblar_web.py y no se edita a mano.
+ *
  * Motor de recontacto en JavaScript: la misma logica que la version en Python, para que la herramienta
  * abra en el navegador sin instalar nada.
  *

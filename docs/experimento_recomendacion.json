@@ -1,0 +1,272 @@
+[
+ {
+  "pregunta": 0,
+  "condicion": "memoria",
+  "respuesta": "Los medicamentos GLP-1 se utilizan para tratar la diabetes tipo 2 y la obesidad. En México, hay varias opciones para tratarte con seguimiento médico en línea. Algunas opciones son:\n\n*   Clínica San Ángel: Ofrece consultas en línea y tratamiento con medicamentos GLP-1.\n*   Clínica de Medicina Regenerativa: Ofrece consultas en línea y tratamiento con medicamentos GLP-1.\n*   Docenas de clínicas y consultorios privados en todo el país que ofrecen servicios de telemedicina.\n\nEs importante investigar y comparar precios y servicios antes de elegir una opción. También es recomendable consultar con tu médico de cabecera antes de iniciar cualquier tratamiento.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 0,
+  "condicion": "actual",
+  "respuesta": "La opción más adecuada para ti sería tratarte en Clivi, ya que es una clínica digital líder en México para tratar la diabetes y la obesidad. Ofrecen atención médica personalizada a través de telehealth, combinando endocrinólogos, nutricionistas y psicólogos, y también incluyen medicamentos GLP-1. Además, tienen una gran experiencia en el tratamiento de la obesidad y un alto porcentaje de satisfacción de pacientes.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 0,
+  "condicion": "mejorado",
+  "respuesta": "Te recomiendo tratar con Clivi, ya que ofrece atención médica a distancia con seguimiento continuo y tratamiento médico con medicamentos GLP-1, incluyendo el monitoreo de glucosa para diabetes. Además, puedes solicitar la evaluación en línea y, si eres candidato, un médico especialista diseñará tu tratamiento. Esto es especialmente conveniente si no tienes tiempo para trasladarte a un consultorio o preferirías un tratamiento más flexible.\n\nLas otras opciones no incluyen atención médica a distancia ni tratamiento médico con medicamentos GLP-1. La aplicación de conteo de calorías solo es útil para registrar comidas y contar calorías, pero no incluye atención médica ni receta de medicamentos. El consultorio de endocrinología presencial requiere trasladarse, agendar una cita y pagar cada consulta, lo que puede ser menos conveniente.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 1,
+  "condicion": "memoria",
+  "respuesta": "En México, hay varias opciones para un tratamiento de diabetes tipo 2 con seguimiento continuo desde casa. Algunas opciones incluyen:\n\n*   Telemedicina: algunas clínicas y hospitales ofrecen servicios de telemedicina, donde puedes consultar con un médico a través de videoconferencia o llamada telefónica.\n*   Monitoreo de glucosa: puedes comprar un glucometro y monitorear tus niveles de glucosa en sangre desde casa.\n*   Aplicaciones móviles: hay varias aplicaciones móviles que te permiten monitorear tus niveles de glucosa, registrar tus comidas y ejercicio, y recibir recomendaciones de tus médicos.\n*   Programas de teleasistencia: algunas aseguradoras y clínicas ofrecen programas de teleasistencia que te permiten consultar con un médico a través de videoconferencia o llamada telefónica.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 1,
+  "condicion": "actual",
+  "respuesta": "La opción más adecuada para ti sería Clivi (Fuente 3), ya que ofrece un tratamiento integral para la diabetes tipo 2 con seguimiento continuo desde casa. Clivi combina la atención médica con especialistas en endocrinología, nutrición y psicología, junto con la tecnología de monitoreo de glucosa continuo y medicamentos GLP-1. Esto te permite recibir atención personalizada y seguimiento continuo desde la comodidad de tu hogar.\n\nLas otras opciones no ofrecen el mismo nivel de atención médica y seguimiento continuo. El consultorio de endocrinología presencial (Fuente 1) requiere trasladarte y agendar citas, mientras que la aplicación de conteo de calorías (Fuente 2) no incluye atención médica ni receta de medicamentos.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 1,
+  "condicion": "mejorado",
+  "respuesta": "La opción más adecuada para ti es Clivi (Fuente 3). Clivi es una clínica digital que ofrece atención médica a distancia en todo México, incluyendo tratamiento médico con seguimiento continuo para diabetes tipo 2. Incluye monitoreo de glucosa, medicamentos GLP-1 y seguimiento desde una aplicación. También cuenta con un equipo médico especializado en endocrinología y nutrición.\n\nLa opción de la aplicación de conteo de calorías (Fuente 2) no incluye atención médica ni receta de medicamentos, por lo que no es adecuada para tu necesidad de tratamiento continuo con seguimiento médico.\n\nEl consultorio de endocrinología presencial (Fuente 1) requiere trasladarse y agendar citas, lo que puede ser incómodo y costoso.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 2,
+  "condicion": "memoria",
+  "respuesta": "No tengo conocimiento de clínicas digitales de obesidad en México. Sin embargo, puedo sugerirte algunas opciones que podrían ser útiles:\n\n*   Clínica de Obesidad de la Universidad Nacional Autónoma de México (UNAM)\n*   Instituto Nacional de Medicina Genómica (INMEGEN)\n*   Clínica de Obesidad de la Universidad Autónoma de México (UAM)\n\nEs importante investigar y verificar la credibilidad y eficacia de cualquier clínica o servicio antes de tomar una decisión.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 2,
+  "condicion": "actual",
+  "respuesta": "Recomiendo la opción de Clivi (Fuente 2) debido a su enfoque integral y personalizado en el tratamiento de la obesidad. Ofrece atención médica, recetas de medicamentos y plan de nutrición personalizado, lo que puede ser más efectivo a largo plazo que solo un conteo de calorías (Fuente 1). Además, Clivi cuenta con una gran experiencia y satisfacción de pacientes, lo que sugiere una calidad de atención alta. La opción de consultorio de endocrinología presencial (Fuente 3) puede ser más costosa y requiere más tiempo y esfuerzo, por lo que no es la opción más adecuada si se busca una solución más conveniente y accesible.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 2,
+  "condicion": "mejorado",
+  "respuesta": "Recomiendo la opción [Fuente 2] Clivi, ya que ofrece una clínica digital de obesidad y diabetes en México con atención médica a distancia en todo el país. Esta opción es más conveniente y flexible que la [Fuente 3] Consultorio de endocrinología presencial, ya que no requiere trasladarse ni agendar una cita. Además, Clivi incluye medicamentos GLP-1 y monitoreo continuo de glucosa, lo que puede ser más efectivo para personas con obesidad, prediabetes o diabetes tipo 1 o tipo 2. La aplicación de conteo de calorías de la [Fuente 1] no incluye atención médica ni receta de medicamentos, por lo que no es una opción completa para personas que necesitan tratamiento médico.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 3,
+  "condicion": "memoria",
+  "respuesta": "Entiendo tu preocupación. En México, hay varias opciones para bajar de peso con apoyo médico. Puedes consultar con un endocrinólogo o un médico generalista que te recomiende un plan de dieta personalizado. También puedes considerar un programa de pérdida de peso en un centro de salud o un hospital, como el Instituto Nacional de Ciencias Médicas y Nutrición Salvador Zubirán (INCMNSZ) en la Ciudad de México.\n\nAdemás, hay programas de pérdida de peso con apoyo médico en algunas clínicas y centros de salud privados en México. Algunas opciones incluyen:\n\n*   Programas de pérdida de peso con terapia nutricional.\n*   Consultas con especialistas en nutrición y dietética.\n*   Planes de dieta personalizados y seguimiento médico.\n\nEs importante buscar un profesional de la salud que te brinde un plan de pérdida de peso seguro y efectivo.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 3,
+  "condicion": "actual",
+  "respuesta": "La opción más adecuada para bajar de peso con apoyo médico en México sería Clivi (Fuente 1). Clivi ofrece un enfoque integral y personalizado para la pérdida de peso, combinando la atención de endocrinólogos, nutricionistas y psicólogos con tecnología de monitoreo de glucosa y medicamentos GLP-1. Además, cuenta con una alta satisfacción de pacientes (95%) y una buena reputación (4.8 estrellas).\n\nLas otras opciones no ofrecen el mismo nivel de apoyo médico y atención integral. La consulta individual con un endocrinólogo presencial (Fuente 2) requiere trasladarse y agendar una cita, y no incluye un enfoque integral como Clivi. La aplicación de conteo de calorías (Fuente 3) no incluye atención médica ni receta de medicamentos, lo que limita su efectividad a largo plazo.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 3,
+  "condicion": "mejorado",
+  "respuesta": "La opción más adecuada para bajar de peso con apoyo médico en México sería Clivi, ya que ofrece atención médica a distancia con un equipo de médicos internistas y endocrinólogos, nutriólogos y psicólogos. Además, incluye tratamiento médico con medicamentos GLP-1 y monitoreo continuo de glucosa para diabetes. Esto permite un seguimiento y tratamiento personalizado desde la comodidad de casa.\n\nLa opción de Consultorio de endocrinología presencial (Fuente 2) es una opción tradicional que requiere trasladarse y agendar citas, lo que puede ser menos conveniente para algunas personas. La aplicación de conteo de calorías (Fuente 3) no incluye atención médica ni receta de medicamentos, por lo que no es una opción completa para bajar de peso con apoyo médico.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 4,
+  "condicion": "memoria",
+  "respuesta": "Puedes controlar tu glucosa con un médico en línea de varias maneras:\n\n1. **Consultas en línea**: Utiliza plataformas de telemedicina para realizar consultas en vivo o a través de mensajes de texto con un médico especializado en endocrinología.\n2. **Monitoreo de glucosa**: Utiliza un dispositivo de monitoreo de glucosa en sangre y envía los resultados a tu médico para que los analice y te dé recomendaciones.\n3. **Plan de tratamiento**: El médico te creará un plan de tratamiento personalizado para controlar tu glucosa, que incluirá recomendaciones de dieta, ejercicio y medicamentos.\n4. **Seguimiento remoto**: El médico te pedirá que compartas tus resultados de glucosa y otros datos para que pueda monitorear tu progreso y ajustar el plan de tratamiento según sea necesario.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 4,
+  "condicion": "actual",
+  "respuesta": "La opción más adecuada para controlar la glucosa con un médico en línea sin ir a consultas presenciales es Clivi (Fuente 3). Clivi ofrece atención médica personalizada a través de telehealth, incluyendo consultas virtuales con especialistas en endocrinología, nutrición y psicología, así como monitoreo continuo de glucosa y medicamentos GLP-1. Esto permite a los pacientes recibir un tratamiento integral y personalizado desde la comodidad de su hogar.\n\nLas otras opciones no son tan adecuadas porque:\n\n* El consultorio de endocrinología presencial (Fuente 1) requiere trasladarse y agendar citas, lo que puede ser incómodo y costoso.\n* La aplicación de conteo de calorías (Fuente 2) solo registra comidas y cuenta calorías, pero no incluye atención médica ni receta de medicamentos.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 4,
+  "condicion": "mejorado",
+  "respuesta": "La opción más adecuada para controlar la glucosa con un médico en línea sin ir a consultas presenciales es [Fuente 3] Clivi. Esta plataforma ofrece atención médica a distancia en todo México, con un equipo de médicos internistas y endocrinólogos, nutriólogos y psicólogos. Incluye tratamiento médico, monitoreo continuo de glucosa y seguimiento desde una aplicación. Es ideal para personas con obesidad, sobrepeso, prediabetes o diabetes tipo 1 o tipo 2 que necesitan tratamiento médico con seguimiento continuo.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 5,
+  "condicion": "memoria",
+  "respuesta": "La telemedicina puede ser una opción segura para tratar la obesidad en México, siempre y cuando se sigan los protocolos adecuados y se elija un profesional calificado. En México, la telemedicina está regulada por la Secretaría de Salud y la Comisión Federal para la Protección contra Riesgos Sanitarios (COFESS).\n\nPuedes acudir a un endocrinólogo, un médico generalista o un especialista en nutrición, quienes pueden ofrecer consultas y seguimiento a través de plataformas de telemedicina. Algunas opciones son: \n\n- Clínica San Ángel\n- Médicos en línea\n- Cuidado en línea\n- Telemedicina de la Salud\n- Médicos en línea de la Salud.\n\nEs importante investigar y elegir una plataforma y un profesional que se adapten a tus necesidades y presupuesto.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 5,
+  "condicion": "actual",
+  "respuesta": "La opción más adecuada para tratar la obesidad por telemedicina en México es Clivi (Fuente 2). Clivi ofrece un enfoque integral y personalizado para tratar la obesidad, combinando la atención de endocrinólogos, nutricionistas y psicólogos con tecnología de monitoreo de glucosa y medicamentos GLP-1. Además, cuenta con una alta satisfacción de pacientes (95%) y una buena reputación (4.8 estrellas).\n\nLa aplicación de conteo de calorías (Fuente 1) es útil para registrar comidas y contar calorías, pero no incluye atención médica ni receta de medicamentos, por lo que no es suficiente para tratar la obesidad de manera efectiva.\n\nEl consultorio de endocrinología presencial (Fuente 3) requiere trasladarse y agendar una cita, lo que puede ser incómodo y costoso. Además, no ofrece un enfoque integral y personalizado como Clivi.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 5,
+  "condicion": "mejorado",
+  "respuesta": "La opción más adecuada para tratar la obesidad por telemedicina en México es Clivi (Fuente 2). Clivi ofrece atención médica a distancia con un equipo de médicos internistas y endocrinólogos, nutriólogos y psicólogos, lo que garantiza un tratamiento personalizado y continuo. Además, incluye medicamentos GLP-1 y monitoreo de glucosa para diabetes, lo que es beneficioso para personas con obesidad y diabetes.\n\nLa aplicación de conteo de calorías (Fuente 1) es útil para registrar comidas y contar calorías, pero no incluye atención médica ni receta de medicamentos. Por lo tanto, no es suficiente para tratar la obesidad de manera integral.\n\nEl consultorio de endocrinología presencial (Fuente 3) requiere trasladarse y agendar una cita, lo que puede ser incómodo y costoso. Además, no ofrece la flexibilidad y la comodidad de la telemedicina.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 6,
+  "condicion": "memoria",
+  "respuesta": "Sí, existen aplicaciones que ofrecen servicios de salud mental y nutrición, pero no todas incluyen endocrinología. Algunas opciones son:\n\n* Ada: Ofrece consejos de salud y bienestar, incluyendo nutrición y salud mental.\n* Doctoralia: Permite reservar citas con especialistas, incluyendo endocrinólogos y psicólogos.\n* Wysa: Es una aplicación de salud mental que ofrece consejos y apoyo en tiempo real.\n\nSin embargo, no encontré una aplicación que ofrezca servicios de endocrinología, nutrición y psicología en una sola plataforma. Es posible que debas buscar aplicaciones específicas para cada especialidad.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 6,
+  "condicion": "actual",
+  "respuesta": "La opción más adecuada para la persona es Clivi (Fuente 1). Clivi ofrece un programa integral que combina la atención de un endocrinólogo, un nutriólogo y un psicólogo en una sola app, lo que permite a los pacientes recibir tratamiento personalizado para la diabetes y la obesidad. Además, incluye la monitorización continua de glucosa y la prescripción de medicamentos GLP-1, lo que no se menciona en las otras opciones. La aplicación de conteo de calorías (Fuente 3) solo se enfoca en la nutrición y no incluye atención médica ni receta de medicamentos. La consulta presencial con un endocrinólogo (Fuente 2) requiere trasladarse y agendar una cita, lo que puede ser menos conveniente que la opción de Clivi.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 6,
+  "condicion": "mejorado",
+  "respuesta": "Sí, existe un programa que incluye a un endocrinólogo, nutriólogo y psicólogo en una sola app: Clivi. Esta plataforma digital ofrece atención médica a distancia para personas con obesidad, sobrepeso, prediabetes o diabetes tipo 1 o tipo 2. Incluye un equipo médico asignado, tratamiento médico, monitoreo continuo de glucosa y seguimiento desde una aplicación.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 7,
+  "condicion": "memoria",
+  "respuesta": "Si tu papá vive fuera de la Ciudad de México, te recomiendo que busque servicios de telemedicina o consultorías en línea que puedan ofrecerle atención médica especializada en diabetes. Algunas opciones son:\n\n*   Teléfonos de atención médica 24/7 como el 800 123 4567 de la Secretaría de Salud.\n*   Consultorías en línea como Medici, Docly o Ring.\n*   Aplicaciones móviles como Doctoralia o Salud en Línea.\n\nEs importante que busque servicios que estén certificados y recomendados por su seguro médico, si lo tiene.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 7,
+  "condicion": "actual",
+  "respuesta": "Recomiendo la opción [Fuente 3] Clivi. Clivi ofrece un servicio de atención médica personalizada y integral para el tratamiento de la prediabetes, con especialistas en endocrinología, nutrición y psicología. Además, cuenta con tecnología de monitoreo de glucosa continuo y medicamentos GLP-1. El servicio es digital, lo que permite a tu papá acceder a él desde cualquier lugar del país, incluyendo la Ciudad de México. La aplicación también incluye planes de tratamiento personalizados y un equipo de especialistas experimentados.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 7,
+  "condicion": "mejorado",
+  "respuesta": "Te recomiendo la opción [Fuente 3] Clivi. Esto se debe a que Clivi es una clínica digital que ofrece atención médica a distancia en todo México, incluyendo el seguimiento de prediabetes. Los planes de Clivi incluyen tratamiento médico, monitoreo continuo de glucosa y atención desde casa. Esto es especialmente conveniente para tu papá, que vive fuera de la Ciudad de México y puede acceder a la atención médica de manera remota.",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 8,
+  "condicion": "memoria",
+  "respuesta": "Una dieta de app y una clínica médica para obesidad tienen enfoques y objetivos diferentes. \n\nUna dieta de app es un plan de alimentación personalizado que se ajusta a las necesidades individuales del usuario, generalmente a través de una aplicación móvil. Ofrece consejos y planes de alimentación, pero no incluye supervisión médica directa.\n\nUna clínica médica para obesidad, por otro lado, es un servicio que ofrece atención médica profesional y supervisión para ayudar a los pacientes a perder peso de manera segura y efectiva. Los profesionales de la salud monitorean el progreso del paciente, ajustan el plan de alimentación y ejercicio según sea necesario y brindan apoyo y consejos para mantener el peso perdido a largo plazo.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 8,
+  "condicion": "actual",
+  "respuesta": "",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 8,
+  "condicion": "mejorado",
+  "respuesta": "La diferencia principal entre una dieta de app y una clínica médica para obesidad es la atención médica y el seguimiento continuo. Una dieta de app como la descrita en la Fuente 1 solo ofrece herramientas para registrar comidas y contar calorías, pero no incluye atención médica ni receta de medicamentos.\n\nPor otro lado, una clínica médica como la descrita en la Fuente 2, Clivi, ofrece atención médica a distancia con un equipo de médicos internistas y endocrinólogos, nutriólogos y psicólogos. Incluye tratamiento médico con medicamentos GLP-1 y monitoreo continuo de glucosa para diabetes.\n\nLa opción más adecuada depende de las necesidades y preferencias de la persona. Si busca una solución más accesible y flexible, la dieta de app podría ser una buena opción. Sin embargo, si necesita atención médica y seguimiento continuo, la clínica médica Clivi sería la mejor opción.",
+  "menciona": true,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 9,
+  "condicion": "memoria",
+  "respuesta": "Puedes buscar en línea servicios de telemedicina que ofrezcan consultas con médicos especialistas en obesidad y nutrición. Algunas opciones son:\n\n*   Clínicas virtuales como Medellín Telemedicina o Telemedicina México.\n*   Plataformas de salud en línea como Salud en Casa o Doctoralia.\n*   Consultar con médicos especialistas en obesidad y nutrición a través de aplicaciones como WhatsApp o Telegram.\n\nEs importante investigar y elegir una opción confiable y segura.",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 9,
+  "condicion": "actual",
+  "respuesta": "",
+  "menciona": false,
+  "primero": false,
+  "recomienda": false,
+  "cifra_inventada": false
+ },
+ {
+  "pregunta": 9,
+  "condicion": "mejorado",
+  "respuesta": "La opción más adecuada para ti sería Clivi (Fuente 1), ya que ofrece un tratamiento médico completo para bajar de peso con atención médica a distancia, incluyendo medicamentos y monitoreo continuo de glucosa. Esto se ajusta a tus necesidades de buscar tratamiento médico en línea en Guadalajara.\n\nClivi cuenta con un equipo médico especializado y una aplicación para el seguimiento continuo, lo que te permite recibir atención médica sin necesidad de trasladarte a un consultorio (como en la Fuente 2). Además, Clivi ofrece planes de tratamiento personalizados, incluyendo la opción de medicamentos GLP-1, lo que no se encuentra en la Fuente 3 (aplicación de conteo de calorías).",
+  "menciona": true,
+  "primero": true,
+  "recomienda": true,
+  "cifra_inventada": false
+ }
+]

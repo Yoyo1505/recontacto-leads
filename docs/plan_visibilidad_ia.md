@@ -93,7 +93,15 @@ Con 36 preguntas × 4 motores × 3 repeticiones el panel tiene 432 respuestas al
 
 ## 8. Qué dice el experimento local
 
-Ver la sección siguiente, con los resultados del experimento con un modelo de lenguaje local.
+Experimento con un modelo local (llama3.1:8b, 10 preguntas de pacientes, tres condiciones; detalle en [`experimento_recomendacion.md`](experimento_recomendacion.md)):
+
+| Condición | Menciona a Clivi | Primero | Como recomendación |
+|---|---|---|---|
+| Sin fuentes | 0 de 10 | 0 de 10 | 0 de 10 |
+| Texto actual de Clivi | 8 de 10 | 8 de 10 | 8 de 10 |
+| Mismo contenido, orientado a solución | 10 de 10 | 9 de 10 | 8 de 10 |
+
+Lo que sí se sostiene: de memoria el modelo no conoce a Clivi (y inventa clínicas), así que el trabajo está en que haya fuentes claras que leer. Lo que no se sostiene: que el formato orientado a solución mejore la recomendación; con 10 preguntas la diferencia no se distingue del azar (p entre 0.5 y 1.0) y el experimento está cerca del techo.
 
 ## 9. Límites del plan
 

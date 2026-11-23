@@ -8,7 +8,7 @@ Despues de armar, comprobar el motor: node web/prueba_motor.js
 
 Donde cambiar cosas
     - Texto del memo, la bitacora y la prueba con dos personas: web/plantilla.html.
-    - Estilos: web/estilos.css. Logica de la herramienta: web/motor.js y web/app.js.
+    - Estilos: web/estilos.css. Logica de la herramienta: las secciones de web/fuente/ (motor y app); este script las ensambla.
     - Capitulos del video: constante CAPITULOS.
 """
 
@@ -17,6 +17,9 @@ import re
 import shutil
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import ensamblar_web  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[1]
 WEB = RAIZ / "web"
@@ -60,6 +63,7 @@ def logo_datos():
 
 
 def main():
+    ensamblar_web.main([])
     plantilla = leer("plantilla.html")
     pieza = {
         "{{CSS}}": leer("estilos.css"),

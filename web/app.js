@@ -1,4 +1,7 @@
 /*
+ * Edicion: este archivo y los demas de web/fuente/app/ son las secciones; web/app.js se genera con
+ * python scripts/ensamblar_web.py y no se edita a mano.
+ *
  * Interfaz de la herramienta (pieza 1 de la entrega). Usa el motor de motor.js y las graficas de Plotly.
  *
  * Estructura

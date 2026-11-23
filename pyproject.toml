@@ -1,6 +1,6 @@
 [project]
 name = "recontacto"
-version = "0.1.0"
+version = "0.7.0"
 requires-python = ">=3.11"
 dependencies = ["pandas", "numpy", "scipy", "scikit-learn", "matplotlib", "dash", "plotly", "openpyxl", "pyarrow", "sqlalchemy", "requests"]
 

@@ -5,7 +5,14 @@
 | Documento | Contenido |
 |---|---|
 | [`../README.md`](../README.md) | Resumen, resultados y cómo correr el proyecto |
-| [`bitacora.md`](bitacora.md) | Registro técnico de cambios |
+| [`../CHANGELOG.md`](../CHANGELOG.md) | Registro de cambios por versión |
+| [`bitacora.md`](bitacora.md) | Bitácora técnica: decisiones, errores y su corrección |
+| [`ANALISIS_PENDIENTES.md`](ANALISIS_PENDIENTES.md) | Qué falta para producción, por prioridad |
+| [`ARQUITECTURA.md`](ARQUITECTURA.md) | Módulos, flujo de datos y decisiones de diseño |
+| [`OPERACION.md`](OPERACION.md) | Guía de operación: rutina diaria, volver atrás, problemas frecuentes |
+| [`SEGURIDAD_Y_PRIVACIDAD.md`](SEGURIDAD_Y_PRIVACIDAD.md) | Qué protege hoy, qué no y qué preguntar a jurídico |
+| [`CONTRIBUIR.md`](CONTRIBUIR.md) | Convenciones, recetas de cambio y pruebas |
+| [`prueba_dos_personas.md`](prueba_dos_personas.md) | Guía y plantilla de la prueba con dos personas (pendiente de hacer) |
 | [`investigacion_clivi.md`](investigacion_clivi.md) | Investigación de la empresa y de su visibilidad en IA y buscadores |
 | [`plan_visibilidad_ia.md`](plan_visibilidad_ia.md) | Plan a 90 días para que las IA recomienden a Clivi como solución, no como alternativa |
 | [`contenido_solucion_clivi.md`](contenido_solucion_clivi.md) | Ejemplo de `llms.txt` y páginas orientadas al problema del paciente |
@@ -44,7 +51,7 @@ python scripts/grabar_demo.py     regenera el GIF de la presentación
 | `evaluar.bat` | Recalcula las métricas y las figuras |
 | `probar.bat` | Corre las pruebas |
 | `abrir_version_web.bat` | Abre la versión web (no instala nada) |
-| `construir_web.bat` | Regenera la versión web desde Python y la compara con él |
+| `construir_web.bat` | Regenera la versión web desde Python, ensambla las secciones y la compara con Python |
 | `grabar_demo.bat` | Regraba el GIF (con la aplicación corriendo) |
 | `crear_video.bat` | Crea el video MP4 de la presentación, con ejemplos de conversación (con la aplicación corriendo) |
 
@@ -60,6 +67,8 @@ app/
   secciones/
     resumen.py       portada: embudo y no contesta por canal
     lista.py         tabla, mapa de calor, detalle y descarga
+    mensajes.py      biblioteca de mensajes por situación y variantes
+    respuestas.py    qué entiende la herramienta de una respuesta
     evidencia.py     intervalos, confusión, variables, calibración, carta p, embudo de asesores
     simulacion.py    Monte Carlo con sensibilidad al supuesto alpha
     prueba_ab.py     tamaño de muestra, potencia y duración
@@ -67,10 +76,10 @@ app/
     limites.py       lo que no se puede afirmar y los supuestos
 src/recontacto/
   data.py            lectura, limpieza y banderas por teléfono (incluye la lista de bajas)
-  ingesta.py         leer, validar, fusionar y versionar datos de cualquier fuente
-  features.py, model.py, policy.py, pipeline.py, mensajes.py, llm.py
-  simulacion.py, control.py, evaluation.py, cli.py
-web/                 versión web: motor.js (lógica), app.js (interfaz), plantilla.html y estilos.css; entrega.html es el resultado
+  ingesta/           paquete: esquema, utilidades, lectura, validación, fusión, versiones, simulación y cli
+  features.py, model.py, policy.py, pipeline.py, mensajes.py, respuestas.py, llm.py
+  simulacion.py, control.py, evaluation.py, visibilidad.py, cli.py
+web/                 versión web: fuente/ (secciones de motor y de interfaz), motor.js y app.js (ensamblados), plantilla.html y estilos.css; entrega.html es el resultado
 bat/                 archivos .bat para todo
 data/
   leads_ficticios.csv    base original (nunca se modifica)

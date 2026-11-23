@@ -9,7 +9,7 @@ Para agregar una seccion: crea el modulo, importalo aqui y anadelo a `SECCIONES`
 Para quitar una: borrala de `SECCIONES`. El orden de la lista es el orden del menu.
 """
 
-from . import datos, evidencia, limites, lista, prueba_ab, resumen, simulacion
+from . import datos, evidencia, limites, lista, mensajes, prueba_ab, respuestas, resumen, simulacion
 
-SECCIONES = [resumen, lista, evidencia, simulacion, prueba_ab, datos, limites]
+SECCIONES = [resumen, lista, mensajes, respuestas, evidencia, simulacion, prueba_ab, datos, limites]
 POR_RUTA = {s.RUTA: s for s in SECCIONES}

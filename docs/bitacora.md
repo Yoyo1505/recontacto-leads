@@ -2,6 +2,21 @@
 
 Registro de cambios del proyecto de recontacto de leads. Cada entrada indica qué cambió, por qué y con qué resultado. Las entradas nuevas van arriba.
 
+## 0.7.0 (23-nov-2026)
+
+### Seccionado del código
+- `ingesta.py` (650 líneas) pasó a ser el paquete `ingesta/` con módulos por responsabilidad: `esquema`, `utilidades`, `lectura`, `validacion`, `fusion`, `versiones`, `simulacion` y `cli`. `__init__.py` reexporta los mismos nombres, así que ni la aplicación ni las pruebas cambiaron de importación, y `python -m recontacto.ingesta` sigue funcionando.
+- Un error durante la división: la aplicación fallaba con un 500 porque `decisiones_para` no estaba reexportada. Lo detectó la prueba del flujo completo de datos en la aplicación.
+- `web/motor.js` y `web/app.js` se editan ahora como 12 y 14 archivos en `web/fuente/`. `scripts/ensamblar_web.py` los une en orden; se comprobó que el resultado es idéntico byte a byte al archivo anterior. `construir_web.py` ensambla primero, y una prueba falla si los ensamblados no coinciden con las secciones.
+- La aplicación Dash tiene ahora las secciones Mensajes y Respuestas (antes solo existían en la web), con prueba de cada una y de sus callbacks.
+
+### Documentación para producción
+- `docs/ANALISIS_PENDIENTES.md` (qué falta, por prioridad P0 a P3, con esfuerzo, criterio de terminado y riesgos), `ARQUITECTURA.md`, `OPERACION.md`, `SEGURIDAD_Y_PRIVACIDAD.md` y `CONTRIBUIR.md`; README en cada carpeta; `CHANGELOG.md` en la raíz; versión 0.7.0 en `pyproject.toml` y `recontacto.__version__`.
+- `.github/workflows/ci.yml` con pruebas de Python, comparación contra JavaScript y comprobación de los ensamblados. No se ha ejecutado en GitHub.
+
+### Experimento de recomendación
+- Con llama3.1:8b y 10 preguntas: sin fuentes no menciona a Clivi (0 de 10) e inventa clínicas; con el texto actual lo menciona 8 de 10; con el mismo contenido reorganizado como solución, 10 de 10 (9 en primer lugar). La diferencia entre los dos textos no es estadísticamente distinguible (p entre 0.5 y 1.0). El experimento tardó 49 minutos en CPU.
+
 ## 0.6.0 (23-nov-2026)
 
 ### Qué mensaje se envía, según la situación (`mensajes.py`)
@@ -33,7 +48,7 @@ Registro de cambios del proyecto de recontacto de leads. Cada entrada indica qu�
 - Hallazgo corregido en la investigación: son cuatro cifras de pacientes distintas en la misma web, no dos.
 
 ### Pruebas
-- 221 pruebas pasan (antes 168).
+- 229 pruebas pasan (antes 168).
 
 ## 0.5.0 (23-nov-2026)
 
